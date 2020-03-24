@@ -2,6 +2,7 @@ module.exports = function toReadable (number) {
   if (number === 0) return 'zero';
 
   const vocabulary = {
+    0: '',
     1: 'one',
     2: 'two',
     3: 'three',
@@ -32,54 +33,12 @@ module.exports = function toReadable (number) {
     100: 'hundred'
   }
 
-  let numberLength = String(number).length;
-  let array = String(number).split('');
-  let test;
-  let testArray = [];
-  let newArray = [];
-  
-  testArray.push(array[1]);
-  testArray.push(array[0]);
-  test = +testArray.join('');
+  if (number > 99) return `${vocabulary[Math.floor(number / 100)]} hundred ${convertNumber(number % 100, vocabulary)}`.trimRight();
+  else return convertNumber(number, vocabulary);
+};
 
-  for (let i = 0; i < numberLength; i++){
-    if (number < 10){
-      newArray.push(vocabulary[array[i]]);
-      continue;
-    }
-
-    if (i === 0) {
-      if (number < 10){
-        newArray.push(vocabulary[array[i]]);
-      }
-      if (number < 20) {
-        newArray.push(vocabulary[array[i] + array[i + 1]]);
-        i++;
-        continue;
-      }
-      if (number < 100) {
-        newArray.push(vocabulary[array[i] * 10]);
-        continue;
-      }
-      newArray.push(vocabulary[array[i]] + ' ' + vocabulary[100]);
-    }
-    if (i === 1) {
-      if (array[i] === '0') continue;
-      if (number < 100) {
-        newArray.push(vocabulary[array[i]]);
-        continue;
-      }
-      if ((test > array[i] * 10) && (test > 10) && (test < 20)){
-        newArray.push(vocabulary[array[i] + array[i + 1]]);
-        i++;
-        continue;
-      }
-      newArray.push(vocabulary[array[i] * 10]);
-    }
-    if (i === 2) {
-      newArray.push(vocabulary[array[i]]);
-    }
-  }
-
-  return newArray.join(' ').trim();
+function convertNumber(number, vocabulary) {
+  if (number < 10) return vocabulary[number];
+  else if (number >= 10 && number < 20) return vocabulary[number];
+  else return `${vocabulary[Math.floor(number / 10) * 10]} ${vocabulary[number % 10]}`.trimRight();
 }
