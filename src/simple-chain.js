@@ -4,7 +4,6 @@ const chainMaker = {
     return this.resultArray.length;
   },
   addLink(value) {
-    if (value === undefined) value = ' ';
     this.resultArray.push('( ' + value + ' )');
     return this;
   },
