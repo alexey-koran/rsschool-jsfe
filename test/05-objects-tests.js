@@ -3,7 +3,7 @@ const assert = require('assert');
 const tasks = require('../src/05-objects-tasks');
 it.optional = require('../extensions/it-optional');
 
-describe('06-objects-tasks', () => {
+describe('05-objects-tasks', () => {
   it.optional('Rectangle constructor should return the rectangle object', () => {
     const rect = new tasks.Rectangle(10, 20);
 
@@ -47,7 +47,6 @@ describe('06-objects-tasks', () => {
     );
   });
 
-
   it.optional('getJSON should return the JSON representation of specified object', () => {
     [
       {
@@ -64,7 +63,6 @@ describe('06-objects-tasks', () => {
       );
     });
   });
-
 
   it.optional('fromJSON should return the object of specified type from JSON representation', () => {
     const Circle = function Circle(radius) {
@@ -108,7 +106,6 @@ describe('06-objects-tasks', () => {
       );
     });
   });
-
 
   it.optional('cssSelectorBuilder should creates css selector object with stringify() method', () => {
     const builder = tasks.cssSelectorBuilder;

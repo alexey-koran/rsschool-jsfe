@@ -28,7 +28,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('generateOdds should return the array of odd numbers of specified size', () => {
     [
       {
@@ -52,7 +51,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('doubleArray should return the specified array twice', () => {
     [
       {
@@ -75,7 +73,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getArrayOfPositives should return the array of positive values from specified array', () => {
     [
       {
@@ -96,7 +93,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getArrayOfStrings should return the array of string values from specified array', () => {
     [
@@ -119,7 +115,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('removeFalsyValues should return the specified array without falsy values', () => {
     [
       {
@@ -140,7 +135,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('findAllOccurrences should return the number of all occurrences of specified item in an array', () => {
     [
@@ -175,7 +169,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getUpperCaseStrings should convert strings from specified array to uppercase', () => {
     [
       {
@@ -194,7 +187,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getStringsLength should convert strings from specified array to uppercase', () => {
     [
       {
@@ -212,7 +204,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('insertItem should insert an item at specified position', () => {
     [
@@ -236,7 +227,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getHead should return the n first items from the specified array', () => {
     [
       {
@@ -256,7 +246,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getTail should return the n last items from the specified array', () => {
     [
       {
@@ -275,7 +264,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('toCsvText should convert two-dimensional numeric array to CSV format', () => {
     [
@@ -303,7 +291,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('toArrayOfSquares should convert numeric array to the array of squares', () => {
     [
       {
@@ -321,7 +308,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getMovingSum should convert numeric array to the according array of moving sum', () => {
     [
@@ -347,7 +333,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getSecondItems should return every second item from the specified array', () => {
     [
       {
@@ -368,7 +353,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('propagateItemsByPositionIndex should propagate every item its position time', () => {
     [
@@ -397,7 +381,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('get3TopItems should return the 3 largest items from integer array', () => {
     [
       {
@@ -424,7 +407,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getPositivesCount should return the number of positive integers in the specified array', () => {
     [
@@ -453,7 +435,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('sortDigitNamesByNumericOrder should sort digit names by its numeric value', () => {
     [
@@ -485,7 +466,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getItemsSum should return the sum of all items of numbers array', () => {
     [
       {
@@ -507,7 +487,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getFalsyValuesCount should return the number of falsy value in the specified array', () => {
     [
@@ -534,7 +513,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('toStringList should return the string list of passed arguments', () => {
     [
       {
@@ -555,7 +533,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('sortCitiesArray should sort the array of objects using two keys', () => {
     [
@@ -632,7 +609,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('getIdentityMatrix should return the identity matrix of the specified size', () => {
     [
       {
@@ -658,7 +634,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getIntervalArray should return the array of integers from start to end (inclusive)', () => {
     [
@@ -689,8 +664,8 @@ describe('03-arrays-tasks', () => {
       {
         start: -5,
         end: -3,
-        expected: [-5, -4 ,-3],
-      }
+        expected: [-5, -4, -3],
+      },
     ].forEach((data) => {
       const actual = tasks.getIntervalArray(data.start, data.end);
       assert.deepEqual(
@@ -699,7 +674,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('distinct should return an array of unique items from the specified array', () => {
     [
@@ -770,7 +744,6 @@ describe('03-arrays-tasks', () => {
     });
   });
 
-
   it.optional('selectMany should return an array of child items from the specified array', () => {
     [
       {
@@ -794,7 +767,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('getElementByIndexes should return an element from array by specified indexes', () => {
     [
@@ -820,7 +792,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('swapHeadAndTail should swap the head and tail of the array', () => {
     [
@@ -849,7 +820,6 @@ describe('03-arrays-tasks', () => {
       );
     });
   });
-
 
   it.optional('Functions from 04-array-test.js should not use basic loops statements', () => {
     Object.getOwnPropertyNames(tasks)
