@@ -3,6 +3,10 @@ const colors = require('colors/safe');
 
 const { engines: { node: nodeVersion }} = require('./package');
 
+console.log(`
+If you enjoyed the task, please give it a star: https://github.com/Shastel/brackets
+`)
+
 if (!semver.satisfies(process.version, nodeVersion)) {
   process.emitWarning(
     colors.red(`
