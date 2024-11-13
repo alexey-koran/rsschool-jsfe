@@ -1,17 +1,22 @@
 module.exports = function check(str, bracketsConfig) {
-  let getBrackets = function(config) {
+  let localStr = str;
+
+  const getBrackets = function(config) {
     return config.map(function(item) {
       return item.join('');
     });
   }
-  let brackets = getBrackets(bracketsConfig);
+
+  const brackets = getBrackets(bracketsConfig);
+
   for (let i = 0; i < brackets.length;) {
-      if (str.indexOf(brackets[i]) !== -1) {
-        str = str.replace(brackets[i], '');
-        i = 0;
-      } else {
-        i++;
-      }
+    if (localStr.indexOf(brackets[i]) !== -1) {
+      localStr = localStr.replace(brackets[i], '');
+      i = 0;
+    } else {
+      i++;
+    }
   };
-  return !str;
+
+  return !localStr;
 }
