@@ -40,6 +40,7 @@ function generateOdds(len) {
 
   return result.map(() => {
     temp += 2;
+
     return temp;
   });
 }
@@ -235,8 +236,9 @@ function toArrayOfSquares(arr) {
 function getMovingSum(arr) {
   const result = [];
 
-  arr.reduce((accum, cur) => {
-    result.push(accum + cur);
+  arr.reduce((acc, curr) => {
+    result.push(acc + curr);
+
     return result[result.length - 1];
   }, 0);
 
@@ -255,7 +257,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  return arr.filter((item, index) => index % 2 !== 0);
+  return arr.filter((_item, index) => index % 2 !== 0);
 }
 
 /**
@@ -273,7 +275,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  return arr.reduce((ac, ce, index) => ac.concat(new Array(index + 1).fill(ce)), []);
+  return arr.reduce((acc, curr, index) => acc.concat(new Array(index + 1).fill(curr)), []);
 }
 
 /**
@@ -353,7 +355,7 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-  return arr.length === 0 ? 0 : arr.reduce((pv, cv) => pv + cv);
+  return arr.length === 0 ? 0 : arr.reduce((acc, curr) => acc + curr);
 }
 
 /**
@@ -433,11 +435,22 @@ function toStringList(arr) {
  */
 function sortCitiesArray(arr) {
   return arr.sort((a, b) => {
-    if (a.country > b.country) return 1;
-    if (a.country < b.country) return -1;
+    if (a.country > b.country) {
+      return 1;
+    }
+
+    if (a.country < b.country) {
+      return -1;
+    }
+
     if (a.country === b.country) {
-      if (a.city > b.city) return 1;
-      if (a.city < b.city) return -1;
+      if (a.city > b.city) {
+        return 1;
+      }
+
+      if (a.city < b.city) {
+        return -1;
+      }
     }
 
     return 0;
@@ -490,7 +503,7 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  return Array.from({ length: end - start + 1 }, (v, k) => start + k);
+  return Array.from({ length: end - start + 1 }, (_value, index) => start + index);
 }
 
 /**
@@ -549,6 +562,7 @@ function group(array, keySelector, valueSelector) {
     } else {
       map.set(item, map.get(item).concat([values[index]]));
     }
+
     return item;
   });
 
@@ -614,7 +628,9 @@ function swapHeadAndTail(arr) {
   const head = arr.slice(0, arrayMiddleIndex);
   const tail = arr.slice(arrayMiddleIndex);
 
-  if (arrayMiddle === arrayMiddleIndex) return tail.concat(head);
+  if (arrayMiddle === arrayMiddleIndex) {
+    return tail.concat(head);
+  }
 
   return tail.slice(1).concat(arr[arrayMiddleIndex]).concat(head);
 }
