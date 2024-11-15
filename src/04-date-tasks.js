@@ -54,10 +54,15 @@ function parseDataFromIso8601(value) {
 function isLeapYear(date) {
   const year = date.getFullYear();
 
-  if (year % 4) return false;
-  if (year % 100) return true;
-  if (year % 400) return false;
-  return true;
+  if (year % 4) {
+    return false;
+  }
+
+  if (year % 100) {
+    return true;
+  }
+
+  return !(year % 400);
 }
 
 /**
@@ -87,8 +92,8 @@ function timeSpanToString(startDate, endDate) {
   const seconds = `0${Math.floor(delta / (1000))}`.slice(-2);
   delta -= seconds * 1000;
 
-  const miliseconds = `00${delta}`.slice(-3);
-  return `${hours}:${minutes}:${seconds}.${miliseconds}`;
+  const milliseconds = `00${delta}`.slice(-3);
+  return `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
 /**
