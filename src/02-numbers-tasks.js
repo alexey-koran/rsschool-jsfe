@@ -208,9 +208,9 @@ function isPrime(n) {
     return true;
   }
 
-  const maximumDividor = Math.ceil(Math.sqrt(n));
+  const maximumDivisor = Math.ceil(Math.sqrt(n));
 
-  for (let i = 2; i <= maximumDividor; i += 1) {
+  for (let i = 2; i <= maximumDivisor; i += 1) {
     if (n % i === 0) {
       return false;
     }
