@@ -110,32 +110,138 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  selectors: [],
+
+  selectorsSpecificity: {
+    element: 0,
+    id: 1,
+    class: 2,
+    attr: 3,
+    pseudoClass: 4,
+    pseudoElement: 5,
+    combinator: -1,
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  duplicationMap: {
+    element: false,
+    id: false,
+    class: true,
+    attr: true,
+    pseudoClass: true,
+    pseudoElement: false,
+    combinator: true,
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  stringifySelector({ body, type }) {
+    const selectorMap = {
+      element: body,
+      id: `#${body}`,
+      class: `.${body}`,
+      attr: `[${body}]`,
+      pseudoClass: `:${body}`,
+      pseudoElement: `::${body}`,
+      combinator: body,
+    };
+
+    if (selectorMap[type] === undefined) {
+      throw new Error('Wrong selector type.');
+    }
+
+    return selectorMap[type];
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  addSelector({ body, type }) {
+    const newObj = { ...cssSelectorBuilder };
+
+    newObj.selectors = [...this.selectors, { body, type }];
+
+    const { isRightOrder, isWithoutChainDuplication } = newObj.validateSelectors();
+
+    if (!isWithoutChainDuplication) {
+      throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
+    }
+
+    if (!isRightOrder) {
+      throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+
+    return newObj;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  validateSelectorsOrder() {
+    const selectorsSpecificity = this.selectors.map(
+      (selector) => this.selectorsSpecificity[selector.type],
+    );
+
+    const isRightOrder = selectorsSpecificity.every((specificity, index, array) => (
+      (specificity === -1 || index === 0) ? true : specificity >= array[index - 1]
+    ));
+
+    return isRightOrder;
+  },
+  validateChainDuplication() {
+    const isSelectorsValid = this.selectors.map((selector, index, selectorsArr) => {
+      if (index === 0) {
+        return true;
+      }
+
+      const canBeDuplicated = this.duplicationMap[selector.type];
+
+      if (canBeDuplicated === undefined) {
+        throw new Error('Wrong selector type.');
+      }
+
+      if (canBeDuplicated) {
+        return true;
+      }
+
+      const isDuplicated = selector.type === selectorsArr[index - 1].type;
+
+      return !isDuplicated;
+    }).every((isValid) => isValid);
+
+    return isSelectorsValid;
+  },
+  validateSelectors() {
+    const isRightOrder = this.validateSelectorsOrder();
+    const isWithoutChainDuplication = this.validateChainDuplication();
+
+    return {
+      isRightOrder,
+      isWithoutChainDuplication,
+    };
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  stringify() {
+    const selectorsStr = this.selectors.reduce((acc, curr) => acc + this.stringifySelector(curr), '');
+
+    return selectorsStr;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return this.addSelector({ body: value, type: 'element' });
+  },
+  id(value) {
+    return this.addSelector({ body: value, type: 'id' });
+  },
+  class(value) {
+    return this.addSelector({ body: value, type: 'class' });
+  },
+  attr(value) {
+    return this.addSelector({ body: value, type: 'attr' });
+  },
+  pseudoClass(value) {
+    return this.addSelector({ body: value, type: 'pseudoClass' });
+  },
+  pseudoElement(value) {
+    return this.addSelector({ body: value, type: 'pseudoElement' });
+  },
+
+  combine(selector1, combinator, selector2) {
+    const newObj = { ...cssSelectorBuilder };
+    newObj.selectors = [...selector1.selectors, { body: ` ${combinator} `, type: 'combinator' }, ...selector2.selectors];
+
+    return newObj;
   },
 };
 
