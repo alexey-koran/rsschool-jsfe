@@ -4,6 +4,7 @@ This monorepo contains solutions for [RS School JS/FE](https://rs.school/courses
 
 ## Tasks
 
-| Task       | Path                    | Branch                                    | Fork                                                     |
-| ---------- | ----------------------- | ----------------------------------------- | -------------------------------------------------------- |
-| `brackets` | [brackets](./brackets/) | [brackets-fork](../../tree/brackets-fork) | [Shastel/brackets](https://github.com/Shastel/brackets/) |
+| Task          | Path                          | Branch                                          | Fork                                                           |
+| ------------- | ----------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
+| `core-js-101` | [core-js-101](./core-js-101/) | [core-js-101-fork](../../tree/core-js-101-fork) | [mikhama/core-js-101](https://github.com/mikhama/core-js-101/) |
+| `brackets`    | [brackets](./brackets/)       | [brackets-fork](../../tree/brackets-fork)       | [Shastel/brackets](https://github.com/Shastel/brackets/)       |
