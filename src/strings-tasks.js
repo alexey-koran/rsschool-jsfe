@@ -250,7 +250,9 @@ function endsWith(str, substr) {
  *   formatTime(0, 0) => "00:00"
  */
 function formatTime(minutes, seconds) {
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  const formatMinutes = minutes.toString().padStart(2, '0');
+  const formatSeconds = seconds.toString().padStart(2, '0');
+  return `${formatMinutes}:${formatSeconds}`;
 }
 
 /**
