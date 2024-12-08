@@ -1,0 +1,63 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css][postcss][scss][less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto",
+    }
+  ],
+  "cSpell.language": "en,ru",
+  "cSpell.enableFiletypes": [
+    "ts",
+    "js",
+    "tsx",
+    "jsx",
+    "html",
+    "css",
+    "postcss",
+    "!json",
+    "!jsonc",
+    "!yaml",
+  ],
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "splitHTMLAttributes.closingBracketOnNewLine": true,
+  "stylelint.packageManager": "pnpm",
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "eslint.useFlatConfig": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.ts",
+    "*.tsx": "${capture}.module.pcss, ${capture}.ts, index.ts",
+    ".env": "*.env, .env.*, .envrc, env.d.ts",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+    "webpack.config.*": "*.env, .env.*, .envrc, eslint.*, env.d.ts, postcss.config.*, prettier.*, svgo.config.*, stylelint.config.*, tailwind.config.*",
+    "package.json": ".browserslist*, .commitlint*, .editorconfig, .eslint*, .github*, .lintstagedrc*, .npm*, .nvmrc, .pnpm*, package-lock.json, .prettier*, .stylelint*, .vscode*, commitlint*, lint-staged*, pnpm*, tsconfig.*",
+    "README*": "AUTHORS, BACKERS*, CHANGELOG*, CITATION*, CODE_OF_CONDUCT*, CODEOWNERS, CONTRIBUTING*, CONTRIBUTORS, COPYING, CREDITS, GOVERNANCE.MD, HISTORY.MD, LICENSE*, MAINTAINERS, SECURITY.MD, SPONSORS*",
+    "readme*": "authors, backers*, changelog*, citation*, code_of_conduct*, codeowners, contributing*, contributors, copying, credits, governance.md, history.md, license*, maintainers, security.md, sponsors*",
+  }
+}
