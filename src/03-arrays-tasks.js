@@ -584,7 +584,8 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-  return arr.map((el) => childrenSelector(el)).flatMap((el) => el);
+  return arr.map((el) => childrenSelector(el))
+    .reduce((acc, curr) => (Array.isArray(curr) ? [...acc, ...curr] : acc), []);
 }
 
 /**
