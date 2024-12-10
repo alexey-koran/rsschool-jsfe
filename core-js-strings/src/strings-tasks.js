@@ -446,7 +446,7 @@ function extractNameFromTemplate(value) {
  *   unbracketTag('<a>') => 'a'
  */
 function unbracketTag(str) {
-  return str.slice(+1).slice(0, -1);
+  return str.slice(1, -1);
 }
 
 /**
@@ -489,22 +489,13 @@ function encodeToRot13(str) {
   const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
 
   return str
-    .split(' ')
-    .map((word) => {
-      return word
-        .split('')
-        .map((char) => {
-          const inputIndex = input.indexOf(char);
+    .split('')
+    .map((char) => {
+      const inputIndex = input.indexOf(char);
 
-          if (inputIndex !== -1) {
-            return output[inputIndex];
-          }
-
-          return char;
-        })
-        .join('');
+      return inputIndex !== -1 ? output[inputIndex] : char;
     })
-    .join(' ');
+    .join('');
 }
 
 /**
