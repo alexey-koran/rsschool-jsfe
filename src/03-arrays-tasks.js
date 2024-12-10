@@ -277,7 +277,7 @@ function propagateItemsByPositionIndex(arr) {
       ...acc,
       ...Array.from({ length: index + 1 }).fill(curr),
     ],
-    []
+    [],
   );
 }
 
@@ -343,7 +343,7 @@ function sortDigitNamesByNumericOrder(arr) {
   };
 
   return [...arr].sort(
-    (a, b) => digitNamesSpecificity[a] - digitNamesSpecificity[b]
+    (a, b) => digitNamesSpecificity[a] - digitNamesSpecificity[b],
   );
 }
 /**
@@ -480,15 +480,14 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  return Array.from({ length: n }).map((_column, columnIndex) =>
-    Array.from({ length: n }).map((_cell, cellIndex) => {
+  return Array.from({ length: n })
+    .map((_column, columnIndex) => Array.from({ length: n }).map((_cell, cellIndex) => {
       if (cellIndex === columnIndex) {
         return 1;
       }
 
       return 0;
-    })
-  );
+    }));
 }
 
 /**
