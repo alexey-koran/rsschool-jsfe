@@ -34,7 +34,7 @@ function getRectangleArea(width, height) {
  *   0    => 0
  */
 function getCircleCircumference(radius) {
-  return 2 * radius * Math.PI;
+  return 2 * Math.PI * radius;
 }
 
 /**
@@ -141,7 +141,7 @@ function getLastDigit(value) {
  * '-525.5'     => -525.5
  */
 function parseNumberFromString(value) {
-  return +value;
+  return Number(value);
 }
 
 /**
@@ -179,7 +179,7 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-  return pow === 0 ? num : Math.round(num / (10 ** pow)) * (10 ** pow);
+  return pow === 0 ? num : Math.round(num / 10 ** pow) * 10 ** pow;
 }
 
 /**

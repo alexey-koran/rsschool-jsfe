@@ -18,7 +18,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-  return value1 + value2;
+  return value1.concat(value2);
 }
 
 /**
@@ -78,7 +78,11 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-  return value[0];
+  if (value === '') {
+    return value;
+  }
+
+  return value.charAt(0);
 }
 
 /**
@@ -108,6 +112,10 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
+  if (count < 0) {
+    return '';
+  }
+
   return value.repeat(count);
 }
 
@@ -240,20 +248,14 @@ function encodeToRot13(str) {
   const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
 
-  let result = '';
-  let index = -1;
+  return str
+    .split('')
+    .map((char) => {
+      const inputIndex = input.indexOf(char);
 
-  for (let i = 0; i <= str.length - 1; i += 1) {
-    index = input.indexOf(str[i]);
-
-    if (index !== -1) {
-      result += output[index];
-    } else {
-      result += str[i];
-    }
-  }
-
-  return result;
+      return inputIndex !== -1 ? output[inputIndex] : char;
+    })
+    .join('');
 }
 
 /**
@@ -274,9 +276,9 @@ function isString(value) {
 }
 
 /**
- * Returns playid card id.
+ * Return card id.
  *
- * Playing cards inittial deck inclides the cards in the following order:
+ * Playing cards initial deck includes the cards in the following order:
  *
  *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
  *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
