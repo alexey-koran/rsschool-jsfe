@@ -582,8 +582,6 @@ function getNearestBigger(number) {
   return number;
 }
 
-getNearestBigger(123450);
-
 module.exports = {
   isPositive,
   getMaxNumber,
