@@ -29,11 +29,15 @@ const getSeason = (date) => {
     return "Unable to determine the time of year!"
   }
 
-  if (Object.prototype.toString.call(date) !== "[object Date]") {
-    throw new Error();
+  try {
+    Date.prototype.valueOf.call(date);
+  } catch {
+    throw new Error('Invalid date!');
   }
 
   return seasons[date.getMonth()];
 }
 
-
+module.exports = {
+  getSeason
+};
