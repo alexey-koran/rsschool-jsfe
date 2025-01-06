@@ -18,82 +18,59 @@
  *
  */
 class VigenereCipheringMachine {
-  constructor(Direct) {
-    this.Direct = Direct === true;
-  }
+  ALPHABET_START = 65;
+  ALPHABET_SIZE = 26;
 
-  encrypt(str, key) {
-    if (!str || !key) {
-      throw new Error('Incorrect arguments!');
-    }
-
-    let offset = 0;
-    let result = "";
-
-    const newKey = key.repeat(Math.ceil(str.length / key.length));
-
-    for (let i = 0; i < str.length; i += 1) {
-      const char = this.getChar(str[i], newKey[i - offset], '+');
-
-      if (!/[a-z]/ig.test(char)) {
-        offset += 1;
-      }
-
-      result += char;
-    }
-
-    if (!this.Direct) {
-      return [...result].reverse().join('');
-    }
-
-    return result;
-  }
-
-  decrypt(str, key) {
-    if (!str || !key) {
-      throw new Error('Incorrect arguments!');
-    }
-
-    let offset = 0;
-    let result = "";
-
-    const newKey = key.repeat(Math.ceil(str.length / key.length));
-
-    for (let i = 0; i < str.length; i += 1) {
-      const char = this.getChar(str[i], newKey[i - offset]);
-
-      if (!/[a-z]/ig.test(char)) {
-        offset += 1;
-      }
-
-      result += char;
-    }
-
-    if (!this.Direct) {
-      return [...result].reverse().join('');
-    }
-
-    return result;
+  constructor(isDirectMode = true) {
+    this.isDirectMode = isDirectMode;
   }
 
   getChar(x, y, operator) {
-    const strChar = x.toUpperCase().codePointAt(0) - 65;
-    const keyChar = y.toUpperCase().codePointAt(0) - 65;
-
-    if (strChar < 0 || strChar > 25) {
-      return x.toUpperCase();
-    }
+    const strChar = x.toUpperCase().charCodeAt(0) - this.ALPHABET_START;
+    const keyChar = y.toUpperCase().charCodeAt(0) - this.ALPHABET_START;
 
     let code = operator === '+' ? strChar + keyChar : strChar - keyChar;
 
-    if (code > 25) {
-      code = code - 26;
+    if (code >= this.ALPHABET_SIZE) {
+      code -= this.ALPHABET_SIZE;
     } else if (code < 0) {
-      code = code + 26;
+      code += this.ALPHABET_SIZE;
     }
 
-    return String.fromCodePoint(code + 65);
+    return String.fromCodePoint(code + this.ALPHABET_START);
   }
+
+  process(str, key, operator) {
+    if (!str || !key) {
+      throw new Error('Incorrect arguments!');
+    }
+
+    let offset = 0;
+    let result = "";
+
+    const alphabeticalLength = str.replace(/[^a-z]/gi, '').length;
+    const newKey = key.repeat(Math.ceil(alphabeticalLength / key.length));
+
+    for (let i = 0; i < str.length; i += 1) {
+      const char = str[i];
+
+      if (/[a-z]/i.test(char)) {
+        result += this.getChar(char, newKey[i - offset], operator);
+      } else {
+        result += char;
+        offset += 1;
+      }
+    }
+
+    if (!this.isDirectMode) {
+      return result.split('').reverse().join('');
+    }
+
+    return result;
+  }
+
+  encrypt = (str, key) => this.process(str, key, '+');
+  decrypt = (str, key) => this.process(str, key, '-');
 }
 
 module.exports = {
