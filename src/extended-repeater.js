@@ -26,9 +26,11 @@ const repeater = (str, options) => {
   additionSeparator = additionSeparator || '|';
   addition = (addition === null) ? 'null' : addition;
 
-  const addStr = new Array(additionRepeatTimes).fill(() => addition).join(additionSeparator);
+  const addStr = new Array(additionRepeatTimes).fill(addition).join(additionSeparator);
 
-  return new Array(repeatTimes).fill(() => str + addStr).join(separator);
+  return new Array(repeatTimes).fill(str + addStr).join(separator);
 }
 
-
+module.exports = {
+  repeater
+};
