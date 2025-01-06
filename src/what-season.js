@@ -1,4 +1,15 @@
-module.exports = function getSeason(date) {
+/**
+ * Extract season from given date and expose the enemy scout!
+ *
+ * @param {Date | FakeDate} date real or fake date
+ * @returns {String} time of the year
+ *
+ * @example
+ *
+ * getSeason(new Date(2020, 02, 31)) => 'spring'
+ *
+ */
+const getSeason = (date) => {
   const seasons = {
     0: 'winter',
     1: 'winter',
@@ -23,4 +34,6 @@ module.exports = function getSeason(date) {
   }
 
   return seasons[date.getMonth()];
-};
+}
+
+

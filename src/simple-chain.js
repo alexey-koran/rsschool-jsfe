@@ -1,4 +1,9 @@
+/**
+ * Implement chainMaker object according to task description
+ *
+ */
 const chainMaker = {
+  chainMarker: '~~',
   resultArray: [],
 
   getLength() {
@@ -7,29 +12,35 @@ const chainMaker = {
 
   addLink(value) {
     this.resultArray.push('( ' + value + ' )');
+
     return this;
   },
 
   removeLink(position) {
-    if (typeof position === 'number' && position > 0 && position <= this.getLength()) {
-      this.resultArray.splice(position - 1, 1);
-    } else {
-      this.resultArray = [];
+    if (typeof position !== 'number' || position <= 0 || position > this.getLength()) {
       throw new Error();
     }
+
+    this.resultArray.splice(position - 1, 1);
+
     return this;
   },
 
   reverseChain() {
     this.resultArray.reverse();
+
     return this;
   },
 
   finishChain() {
-    let result = this.resultArray;
+    const result = this.resultArray;
+
     this.resultArray = [];
-    return result.join('~~');
+
+    return result.join(this.chainMarker);
   }
 };
 
-module.exports = chainMaker;
+module.exports = {
+  chainMaker
+};
