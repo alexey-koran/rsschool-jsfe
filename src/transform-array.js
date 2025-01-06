@@ -20,7 +20,15 @@ const transform = (arr) => {
     const nextElement = array[index + 1];
     const afterNextElement = array[index + 2];
 
-    if (nextElement !== undefined && afterNextElement !== '--discard-prev') {
+    if (nextElement === undefined) {
+      return [...before, ...after];
+    }
+
+    if (afterNextElement === '--double-prev') {
+      return [...before, ...after.slice(2)];
+    }
+
+    if (afterNextElement !== '--discard-prev') {
       return [...before, ...after.slice(1)];
     }
 
@@ -31,7 +39,7 @@ const transform = (arr) => {
     const prevElement = array[index - 1];
 
     if (prevElement !== undefined) {
-      return [...before.slice(-1), ...after];
+      return [...before.slice(0, -1), ...after];
     }
 
     return [...before, ...after];
@@ -39,9 +47,8 @@ const transform = (arr) => {
 
   const doubleNext = ({ array, index, before, after }) => {
     const nextElement = array[index + 1];
-    const afterNextElement = array[index + 2];
 
-    if (nextElement !== undefined && afterNextElement !== '--discard-prev') {
+    if (nextElement !== undefined) {
       return [...before, nextElement, ...after];
     }
 
@@ -61,13 +68,15 @@ const transform = (arr) => {
   const actions = {
     '--discard-next': discardNext,
     '--discard-prev': discardPrev,
-    '--double-prev': doubleNext,
-    '--double-next': doublePrev,
+    '--double-prev': doublePrev,
+    '--double-next': doubleNext,
   }
 
-  let result = [];
+  let result = arr;
 
-  arr.forEach((element, index) => {
+  for (let index = 0; index < result.length; index += 1) {
+    const element = result[index];
+
     const currentAction = actions[element];
 
     if (currentAction !== undefined) {
@@ -75,10 +84,8 @@ const transform = (arr) => {
       const after = result.slice(index + 1, result.length);
 
       result = currentAction({ array: result, index, before, after})
-    } else {
-      result = [...result, element]
     }
-  });
+  }
 
   return result;
 }
