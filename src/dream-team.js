@@ -23,7 +23,7 @@ const createDreamTeam = (members) => {
 
     return '';
 
-  }).join('');
+  }).sort((a, b) => a.localeCompare(b)).join('');
 }
 
 module.exports = {
