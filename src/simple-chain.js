@@ -11,25 +11,31 @@ const chainMaker = {
   },
 
   addLink(value) {
-    this.resultArray.push('( ' + value + ' )');
+    const newObject = {...this};
 
-    return this;
+    newObject.resultArray = [...newObject.resultArray, '( ' + value + ' )'];
+
+    return newObject;
   },
 
   removeLink(position) {
     if (typeof position !== 'number' || position <= 0 || position > this.getLength()) {
-      throw new Error();
+      throw new Error('You can\'t remove incorrect link!');
     }
 
-    this.resultArray.splice(position - 1, 1);
+    const newObject = {...this};
 
-    return this;
+    newObject.resultArray = newObject.resultArray.filter((_value, index) => index + 1 !== position);
+
+    return newObject;
   },
 
   reverseChain() {
-    this.resultArray.reverse();
+    const newObject = {...this};
 
-    return this;
+    newObject.resultArray = [...newObject.resultArray].reverse();
+
+    return newObject;
   },
 
   finishChain() {
