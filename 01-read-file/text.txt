@@ -1,0 +1,1 @@
+Choosing a name like `c` simply because names `a` and `b` are already taken is not a good practice. It's important to select meaningful and descriptive names that clearly convey the purpose or function of the variable or entity being named.
