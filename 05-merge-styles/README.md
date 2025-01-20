@@ -4,10 +4,10 @@ In the `index.js` file of the `05-merge-styles` directory, develop a script that
 
 ### Requirements
 
-- [ ] After the script execution terminates, a `bundle.css` file containing styles from all files in the `styles` folder should be located in the `project-dist` folder.
-- [ ] When styles files are added/removed/modified in the `styles` folder and the script is rerun, the `bundle.css` file is overwritten and contains the up-to-date styles.
-- [ ] Any files with extensions other than `css` or directories are ignored.
-- [ ] Styles in the `bundle.css` file created during the compilation process should not be corrupted.
+- [x] After the script execution terminates, a `bundle.css` file containing styles from all files in the `styles` folder should be located in the `project-dist` folder.
+- [x] When styles files are added/removed/modified in the `styles` folder and the script is rerun, the `bundle.css` file is overwritten and contains the up-to-date styles.
+- [x] Any files with extensions other than `css` or directories are ignored.
+- [x] Styles in the `bundle.css` file created during the compilation process should not be corrupted.
 
 ### Objectives
 
