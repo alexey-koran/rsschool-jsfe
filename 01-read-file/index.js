@@ -3,8 +3,10 @@ const { stdout } = require('node:process');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
+const fileName = 'text.txt';
+
 const read = async () => {
-  const path = join(__dirname, 'text.txt');
+  const path = join(__dirname, fileName);
   const input = createReadStream(path);
 
   await pipeline(input, stdout);
