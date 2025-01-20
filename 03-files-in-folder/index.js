@@ -1,10 +1,10 @@
 const { readdir, stat } = require('node:fs/promises');
 const { join, extname } = require('node:path');
 
-const folderPath = '/secret-folder';
+const inputPath = '/secret-folder';
 
 const ls = async () => {
-  const dirnamePath = join(__dirname, folderPath);
+  const dirnamePath = join(__dirname, inputPath);
 
   const dirList = await readdir(dirnamePath, {
     withFileTypes: true,
