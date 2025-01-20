@@ -21,8 +21,6 @@ const copyFolderRecursive = async ({
   destinationPath,
   ignoredFiles = [],
 }) => {
-  console.debug('destinationPath:', destinationPath);
-
   try {
     await mkdir(destinationPath, { recursive: true });
 
