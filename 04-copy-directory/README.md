@@ -10,9 +10,9 @@ In the `index.js` file of the `04-copy-directory` folder, implement the `copyDir
 
 ### Requirements
 
-- [ ] After the function execution terminates, a `files-copy` folder is created, the contents of which are an exact copy of the original `files` folder.
-- [ ] When files are added/removed/modified in the `files` folder and the `node 04-copy-directory` is rerun, the contents of the `files-copy` folder are updated.
-- [ ] The use of `fsPromises.cp()` is prohibited.
+- [x] After the function execution terminates, a `files-copy` folder is created, the contents of which are an exact copy of the original `files` folder.
+- [x] When files are added/removed/modified in the `files` folder and the `node 04-copy-directory` is rerun, the contents of the `files-copy` folder are updated.
+- [x] The use of `fsPromises.cp()` is prohibited.
 
 ### Objectives
 
