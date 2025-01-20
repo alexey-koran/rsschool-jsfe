@@ -37,7 +37,7 @@ const write = async () => {
     } else {
       writeableStream.write(`${line}\n`, 'utf8', (err) => {
         if (err) {
-          console.error('Error writing to file:', err);
+          throw new Error(`Error writing to file: ${err}`);
         }
       });
     }
