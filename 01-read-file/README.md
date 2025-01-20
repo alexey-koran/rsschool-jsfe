@@ -10,10 +10,10 @@ In the file `index.js` within the directory `01-read-file`, develop a script tha
 
 ### Requirements
 
-- [ ] Inside the folder `01-read-file`, there are 2 files, `index.js` and `text.txt`.
-- [ ] When executing the command `node 01-read-file` <u>in the root directory of the repository</u>, the contents of the file `text.txt` should be printed to the console.
-- [ ] Synchronous file reading methods should not be used in the code.
-- [ ] File reading should occur using **ReadStream**.
+- [x] Inside the folder `01-read-file`, there are 2 files, `index.js` and `text.txt`.
+- [x] When executing the command `node 01-read-file` <u>in the root directory of the repository</u>, the contents of the file `text.txt` should be printed to the console.
+- [x] Synchronous file reading methods should not be used in the code.
+- [x] File reading should occur using **ReadStream**.
 
 ### Objectives
 
@@ -35,7 +35,7 @@ In this task, you are required to develop a small script that outputs the conten
 
 ### Tips
 
-For imports in Node.js, use [CommonJS modules](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules).  
+For imports in Node.js, use [CommonJS modules](https://nodejs.org/docs/latest/api/modules.html#modules_modules_commonjs_modules).
 Despite the fact that Node.js now has almost full support for **ECMAScript modules** (`import/export`), this approach is not yet fully stable, and the vast majority of code you encounter will be written using CommonJS:
 
 ```js
@@ -47,16 +47,16 @@ For reading the file, you will use [streams](https://nodejs.org/api/stream.html#
 It's crucial to familiarize yourself with another fundamental concept in Node.js: **Events**. Node.js extensively uses events, and most objects are instances of the `EventEmitter` class. Understanding streams' operation is greatly enhanced by first getting to know events, as every stream is a descendant of `EventEmitter`.
 Materials on these topics are also attached in the [Useful Links section](#useful-links).
 
-When creating a **ReadStream**, pay attention to the fact that the command to run your code should be executed <u>in the root directory of the repository</u>. Therefore, it is important to correctly pass the file path for reading.  
-Node.js, in the case of passing a relative path to the file like `./text.txt`, will look for it relative to the directory <u>in which the process was started</u>.  
-The [join function](https://nodejs.org/api/path.html#path_path_join_paths) from the **Path module** allows you to create a full path to the text file based on the variable `__dirname`, which stores the path to the directory where your script file is located. Thus, the directory from which you run the code will not affect the location of the required file, and you will always refer to `text.txt` located next to `index.js`.  
+When creating a **ReadStream**, pay attention to the fact that the command to run your code should be executed <u>in the root directory of the repository</u>. Therefore, it is important to correctly pass the file path for reading.
+Node.js, in the case of passing a relative path to the file like `./text.txt`, will look for it relative to the directory <u>in which the process was started</u>.
+The [join function](https://nodejs.org/api/path.html#path_path_join_paths) from the **Path module** allows you to create a full path to the text file based on the variable `__dirname`, which stores the path to the directory where your script file is located. Thus, the directory from which you run the code will not affect the location of the required file, and you will always refer to `text.txt` located next to `index.js`.
 The [Path module](https://nodejs.org/api/path.html) also contains other useful functions for manipulating paths, so I strongly recommend studying its capabilities.
 
 You will have several options for directing your read stream to the [standard output stream](https://en.wikipedia.org/wiki/Standard_streams) (i.e., the console). You can use both the high-level [console.log()](https://nodejs.org/api/console.html#console_console_log_data_args) and work directly with the output stream [process.stdout](https://nodejs.org/api/process.html#process_process_stdout).
 
 ##### Useful Links
 
-_If you're looking for the information in Russian, please note that translations of documentation into Russian may be outdated and may not contain all the modern features of the modules.  
+_If you're looking for the information in Russian, please note that translations of documentation into Russian may be outdated and may not contain all the modern features of the modules.
 For up-to-date information, always use the official documentation!_
 
 - Events:
