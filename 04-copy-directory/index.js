@@ -6,11 +6,8 @@ const { join } = require('node:path');
 const inputFolder = '/files';
 const outputFolder = '/files-copy';
 
-const copyFile = async (sourcePath, destinationPath, file) => {
+const copyFile = async (sourceFilePath, destinationFilePath) => {
   try {
-    const sourceFilePath = join(sourcePath, file);
-    const destinationFilePath = join(destinationPath, file);
-
     const sourceStream = createReadStream(sourceFilePath);
     const destinationStream = createWriteStream(destinationFilePath);
 
@@ -35,11 +32,16 @@ const cp = async () => {
   const fileToRemove = copyFiles.filter((file) => !files.includes(file));
 
   fileToRemove.forEach(async (file) => {
-    await rm(join(destinationPath, file));
+    const destinationFilePath = join(destinationPath, file);
+
+    await rm(destinationFilePath);
   });
 
   files.forEach(async (file) => {
-    await copyFile(sourcePath, destinationPath, file);
+    const sourceFilePath = join(sourcePath, file);
+    const destinationFilePath = join(destinationPath, file);
+
+    await copyFile(sourceFilePath, destinationFilePath);
   });
 };
 
