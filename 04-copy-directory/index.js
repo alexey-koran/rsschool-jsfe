@@ -24,10 +24,8 @@ const copyFile = async (sourcePath, destinationPath, file) => {
 };
 
 const cp = async () => {
-  const dirnamePath = __dirname;
-
-  const sourcePath = join(dirnamePath, inputFolder);
-  const destinationPath = join(dirnamePath, outputFolder);
+  const sourcePath = join(__dirname, inputFolder);
+  const destinationPath = join(__dirname, outputFolder);
 
   await mkdir(destinationPath, { recursive: true });
 
