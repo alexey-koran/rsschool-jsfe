@@ -7,15 +7,10 @@ const inputFolder = 'files';
 const outputFolder = 'files-copy';
 
 const copyFile = async (sourceFilePath, destinationFilePath) => {
-  try {
-    const sourceStream = createReadStream(sourceFilePath);
-    const destinationStream = createWriteStream(destinationFilePath);
+  const sourceStream = createReadStream(sourceFilePath);
+  const destinationStream = createWriteStream(destinationFilePath);
 
-    await pipeline(sourceStream, destinationStream);
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  await pipeline(sourceStream, destinationStream);
 
   return true;
 };
