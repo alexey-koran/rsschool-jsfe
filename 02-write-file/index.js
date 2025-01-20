@@ -34,13 +34,13 @@ const write = async () => {
   readLine.on('line', async (line) => {
     if (line.trim() === exitCommand) {
       handleExit(writeableStream);
-    } else {
-      writeableStream.write(`${line}\n`, 'utf8', (err) => {
-        if (err) {
-          throw new Error(`Error writing to file: ${err}`);
-        }
-      });
     }
+
+    writeableStream.write(`${line}\n`, 'utf8', (err) => {
+      if (err) {
+        throw new Error(`Error writing to file: ${err}`);
+      }
+    });
 
     readLine.prompt();
   });
