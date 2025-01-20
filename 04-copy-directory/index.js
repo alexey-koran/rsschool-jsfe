@@ -3,8 +3,8 @@ const { mkdir, readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
-const inputFolder = '/files';
-const outputFolder = '/files-copy';
+const inputFolder = 'files';
+const outputFolder = 'files-copy';
 
 const copyFile = async (sourceFilePath, destinationFilePath) => {
   try {
