@@ -46,5 +46,9 @@ const cp = async () => {
 };
 
 (async () => {
-  await cp();
+  try {
+    await cp();
+  } catch (error) {
+    console.error(error);
+  }
 })();

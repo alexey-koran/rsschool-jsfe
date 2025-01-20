@@ -38,5 +38,9 @@ const ls = async () => {
 };
 
 (async () => {
-  await ls();
+  try {
+    await ls();
+  } catch (error) {
+    console.error(error);
+  }
 })();

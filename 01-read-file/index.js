@@ -11,5 +11,9 @@ const read = async () => {
 };
 
 (async () => {
-  await read();
+  try {
+    await read();
+  } catch (error) {
+    console.error(error);
+  }
 })();

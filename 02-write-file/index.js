@@ -32,21 +32,17 @@ const write = async () => {
   readLine.prompt();
 
   readLine.on('line', async (line) => {
-    try {
-      if (line.trim() === exitCommand) {
-        handleExit(writeableStream);
-      } else {
-        writeableStream.write(`${line}\n`, 'utf8', (err) => {
-          if (err) {
-            console.error('Error writing to file:', err);
-          }
-        });
-      }
-
-      readLine.prompt();
-    } catch (error) {
-      console.error(error);
+    if (line.trim() === exitCommand) {
+      handleExit(writeableStream);
+    } else {
+      writeableStream.write(`${line}\n`, 'utf8', (err) => {
+        if (err) {
+          console.error('Error writing to file:', err);
+        }
+      });
     }
+
+    readLine.prompt();
   });
 
   readLine.on('SIGINT', () => {
@@ -55,5 +51,9 @@ const write = async () => {
 };
 
 (async () => {
-  await write();
+  try {
+    await write();
+  } catch (error) {
+    console.error(error);
+  }
 })();
