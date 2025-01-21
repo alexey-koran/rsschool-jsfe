@@ -3,33 +3,22 @@ const { readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join, extname } = require('node:path');
 
-const mergeStyles = async ({ sourcePath, targetPath, fileName }) => {
-  const bundleFilePath = join(targetPath, fileName);
+const mergeStyles = async ({ paths: { input, output } }) => {
+  await rm(output, { force: true });
 
-  await rm(bundleFilePath, { force: true });
+  const sourceDirList = await readdir(input, { withFileTypes: true });
 
-  const sourceDirList = await readdir(sourcePath, {
-    withFileTypes: true,
-  });
+  const cssFiles = sourceDirList
+    .filter((file) => file.isFile() && extname(file.name) === '.css')
+    .map((file) => join(input, file.name));
 
-  const styles = sourceDirList.filter((element) => {
-    const path = join(element.parentPath, element.name);
-    const extension = extname(path);
+  await Promise.all(
+    cssFiles.map(async (cssFile) => {
+      const targetStream = createWriteStream(output, { flags: 'a' });
 
-    return element.isFile() && extension === '.css';
-  });
-
-  styles.forEach(async (cssFile) => {
-    const sourceFilePath = join(sourcePath, cssFile.name);
-
-    const sourceStream = createReadStream(sourceFilePath);
-
-    const targetStream = createWriteStream(bundleFilePath, {
-      flags: 'a',
-    });
-
-    await pipeline(sourceStream, targetStream);
-  });
+      await pipeline(createReadStream(cssFile), targetStream);
+    }),
+  );
 };
 
 module.exports = {
