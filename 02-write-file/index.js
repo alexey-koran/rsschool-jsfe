@@ -3,23 +3,23 @@ const { stdin, stdout, exit: exitProcess } = require('node:process');
 const { createInterface } = require('node:readline/promises');
 const { join } = require('node:path');
 
-const handleExit = (writeableStream, farewellMessage) => {
+const handleExit = (outputStream, farewellMessage) => {
   console.log(farewellMessage);
 
-  writeableStream.end();
+  outputStream.end();
   exitProcess(0);
 };
 
 const writeToFile = async ({
-  fileName,
+  output,
   exitCommand,
   messages: { welcome, farewell, prompt },
 }) => {
   console.log(welcome);
 
-  const path = join(__dirname, fileName);
+  const path = join(__dirname, output);
 
-  const writeableStream = createWriteStream(path, { flags: 'a' });
+  const outputStream = createWriteStream(path, { flags: 'a' });
 
   const readLine = createInterface({
     input: stdin,
@@ -31,20 +31,20 @@ const writeToFile = async ({
 
   readLine.on('line', (line) => {
     if (line.trim() === exitCommand) {
-      handleExit(writeableStream, farewell);
+      handleExit(outputStream, farewell);
     } else {
-      writeableStream.write(`${line}\n`);
+      outputStream.write(`${line}\n`);
 
       readLine.prompt();
     }
   });
 
-  readLine.on('SIGINT', () => handleExit(writeableStream, farewell));
+  readLine.on('SIGINT', () => handleExit(outputStream, farewell));
 };
 
 (async () => {
   try {
-    const fileName = 'text.txt';
+    const output = 'text.txt';
     const exitCommand = 'exit';
 
     const welcome = 'Welcome!\n';
@@ -52,7 +52,7 @@ const writeToFile = async ({
     const prompt = 'Write to file:';
 
     await writeToFile({
-      fileName,
+      output,
       exitCommand,
       messages: {
         welcome,
