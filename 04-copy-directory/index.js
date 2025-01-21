@@ -3,15 +3,16 @@ const { mkdir, readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
-const copyFile = async (sourceFilePath, targetFilePath) => {
-  const sourceStream = createReadStream(sourceFilePath);
-  const targetStream = createWriteStream(targetFilePath);
+const copyFile = async (input, output) => {
+  const sourceStream = createReadStream(input);
+  const targetStream = createWriteStream(output);
+
   await pipeline(sourceStream, targetStream);
 };
 
-const copyFiles = async ({ inputFolder, outputFolder }) => {
-  const sourcePath = join(__dirname, inputFolder);
-  const targetPath = join(__dirname, outputFolder);
+const copyFiles = async ({ input, output }) => {
+  const sourcePath = join(__dirname, input);
+  const targetPath = join(__dirname, output);
 
   await mkdir(targetPath, { recursive: true });
 
@@ -36,10 +37,10 @@ const copyFiles = async ({ inputFolder, outputFolder }) => {
 
 (async () => {
   try {
-    const inputFolder = 'files';
-    const outputFolder = 'files-copy';
+    const input = 'files';
+    const output = 'files-copy';
 
-    await copyFiles({ inputFolder, outputFolder });
+    await copyFiles({ input, output });
 
     console.debug('Copying of directory files was successful!');
   } catch (error) {
