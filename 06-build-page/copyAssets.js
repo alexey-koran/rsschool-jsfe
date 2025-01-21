@@ -3,59 +3,56 @@ const { mkdir, readdir, rm, stat } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
-const copyFile = async (sourceFilePath, targetFilePath) => {
-  try {
-    const sourceStream = createReadStream(sourceFilePath);
-    const targetStream = createWriteStream(targetFilePath);
-
-    await pipeline(sourceStream, targetStream);
-  } catch (error) {
-    throw new Error(
-      `Error copying file: ${sourceFilePath} -> ${targetFilePath}. ${error.message}`,
-    );
-  }
+const copyFile = async (sourcePath, targetPath) => {
+  await pipeline(createReadStream(sourcePath), createWriteStream(targetPath));
 };
 
-const copyFolderRecursive = async ({ sourcePath, targetPath }) => {
-  try {
-    await mkdir(targetPath, { recursive: true });
+const copyFolderRecursive = async ({ paths: { input, output } }) => {
+  await mkdir(output, { recursive: true });
 
-    const entries = await readdir(sourcePath, { withFileTypes: true });
-    entries.forEach(async (entry) => {
-      const sourceEntryPath = join(sourcePath, entry.name);
-      const targetEntryPath = join(targetPath, entry.name);
+  const entries = await readdir(input, { withFileTypes: true });
+
+  await Promise.all(
+    entries.map(async (entry) => {
+      const sourceEntryPath = join(input, entry.name);
+      const targetEntryPath = join(output, entry.name);
 
       if (entry.isDirectory()) {
-        await copyFolderRecursive({
-          sourcePath: sourceEntryPath,
-          targetPath: targetEntryPath,
+        return copyFolderRecursive({
+          paths: { input: sourceEntryPath, output: targetEntryPath },
         });
       } else if (entry.isFile()) {
-        await copyFile(sourceEntryPath, targetEntryPath);
+        return copyFile(sourceEntryPath, targetEntryPath);
       }
-    });
+    }),
+  );
 
-    const targetEntries = await readdir(targetPath, {
-      withFileTypes: true,
-    });
+  const targetEntries = await readdir(output, { withFileTypes: true });
 
-    targetEntries.forEach(async (destEntry) => {
-      const destEntryPath = join(targetPath, destEntry.name);
-      const sourceEntryPath = join(sourcePath, destEntry.name);
+  await Promise.all(
+    targetEntries.map(async (destEntry) => {
+      const destEntryPath = join(output, destEntry.name);
+      const sourceEntryPath = join(input, destEntry.name);
 
       try {
         await stat(sourceEntryPath);
       } catch {
         await rm(destEntryPath, { recursive: true, force: true });
       }
-    });
+    }),
+  );
+};
+
+const copyFolder = async ({ paths: { input, output } }) => {
+  try {
+    await copyFolderRecursive({ paths: { input, output } });
   } catch (error) {
     throw new Error(
-      `Error copying folder: ${sourcePath} -> ${targetPath}. ${error.message}`,
+      `Error copying folder: ${input} -> ${output}. ${error.message}`,
     );
   }
 };
 
 module.exports = {
-  copyFolderRecursive,
+  copyFolder,
 };
