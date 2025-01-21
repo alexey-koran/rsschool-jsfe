@@ -6,9 +6,9 @@ const { join, extname } = require('node:path');
 const mergeStyles = async ({ input, output }) => {
   const sourcePath = join(__dirname, input);
 
-  const outputPath = join(__dirname, output);
+  const targetPath = join(__dirname, output);
 
-  await rm(outputPath, { force: true });
+  await rm(targetPath, { force: true });
 
   const sourceDirList = await readdir(sourcePath, { withFileTypes: true });
 
@@ -20,7 +20,7 @@ const mergeStyles = async ({ input, output }) => {
     const sourceFilePath = join(sourcePath, cssFile.name);
 
     const sourceStream = createReadStream(sourceFilePath);
-    const targetStream = createWriteStream(outputPath, { flags: 'a' });
+    const targetStream = createWriteStream(targetPath, { flags: 'a' });
 
     return pipeline(sourceStream, targetStream);
   });
