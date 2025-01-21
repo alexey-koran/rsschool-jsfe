@@ -1,52 +1,36 @@
 const { readFile, writeFile, readdir } = require('node:fs/promises');
 const { join, extname } = require('node:path');
 
-const replaceTemplateTags = async ({
-  templatePath,
-  componentsPath,
-  outputPath,
-}) => {
+const replaceTemplateTags = async ({ paths: { input, template, output } }) => {
   try {
-    const templateContent = await readFile(templatePath);
+    const templateContent = await readFile(template, 'utf-8');
 
-    const componentFiles = await readdir(componentsPath, {
-      withFileTypes: true,
-    });
+    const componentFiles = await readdir(input, { withFileTypes: true });
 
-    let resultContent = templateContent;
+    const components = await Promise.all(
+      componentFiles
+        .filter((file) => file.isFile() && extname(file.name) === '.html')
+        .map(async (file) => {
+          const fileName = file.name.replace(extname(file.name), '');
 
-    const promises = componentFiles.map(async (file) => {
-      const path = join(componentsPath, file.name);
-      const extension = extname(path);
+          const tagName = `{{${fileName}}}`;
 
-      if (file.isFile() && extension === '.html') {
-        const fileName = file.name.replace(extension, '');
-        const tagName = `{{${fileName}}}`;
+          const componentContent = await readFile(join(input, file.name));
 
-        const componentContent = await readFile(path);
+          return { tagName, componentContent };
+        }),
+    );
 
-        return { tagName, componentContent };
-      }
-    });
+    const resultContent = components.reduce(
+      (content, { tagName, componentContent }) =>
+        content.replace(new RegExp(tagName, 'g'), componentContent),
+      templateContent,
+    );
 
-    const results = await Promise.allSettled(promises);
-
-    results.forEach(({ status, value }) => {
-      if (status === 'fulfilled' && value) {
-        const { tagName, componentContent } = value;
-
-        resultContent = resultContent.replace(
-          new RegExp(tagName, 'g'),
-          componentContent,
-        );
-      } else if (status === 'rejected') {
-        console.error('Error loading component:', value);
-      }
-    });
-
-    await writeFile(outputPath, resultContent);
+    await writeFile(output, resultContent, 'utf-8');
   } catch (error) {
-    throw new Error(error);
+    console.error(`Error processing template tags: ${error.message}`);
+    throw error;
   }
 };
 
