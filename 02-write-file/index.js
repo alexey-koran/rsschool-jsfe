@@ -3,56 +3,63 @@ const { stdin, stdout, exit: exitProcess } = require('node:process');
 const { createInterface } = require('node:readline/promises');
 const { join } = require('node:path');
 
-const welcomeMessage = 'Welcome!\n';
-const farewellMessage = '\nGoodbye!';
-const exitCommand = 'exit';
-
-const fileName = 'text.txt';
-
-const handleExit = (writeableStream) => {
+const handleExit = (writeableStream, farewellMessage) => {
   console.log(farewellMessage);
 
   writeableStream.end();
   exitProcess(0);
 };
 
-const readLine = createInterface({
-  input: stdin,
-  output: stdout,
-  prompt: 'Write to file:',
-});
-
-const write = async () => {
-  console.log(welcomeMessage);
+const writeToFile = async ({
+  fileName,
+  exitCommand,
+  messages: { welcome, farewell, prompt },
+}) => {
+  console.log(welcome);
 
   const path = join(__dirname, fileName);
 
   const writeableStream = createWriteStream(path, { flags: 'a' });
 
+  const readLine = createInterface({
+    input: stdin,
+    output: stdout,
+    prompt,
+  });
+
   readLine.prompt();
 
-  readLine.on('line', async (line) => {
+  readLine.on('line', (line) => {
     if (line.trim() === exitCommand) {
-      handleExit(writeableStream);
+      handleExit(writeableStream, farewell);
+    } else {
+      writeableStream.write(`${line}\n`);
+
+      readLine.prompt();
     }
-
-    writeableStream.write(`${line}\n`, 'utf8', (err) => {
-      if (err) {
-        throw new Error(`Error writing to file: ${err}`);
-      }
-    });
-
-    readLine.prompt();
   });
 
-  readLine.on('SIGINT', () => {
-    handleExit(writeableStream);
-  });
+  readLine.on('SIGINT', () => handleExit(writeableStream, farewell));
 };
 
 (async () => {
   try {
-    await write();
+    const fileName = 'text.txt';
+    const exitCommand = 'exit';
+
+    const welcome = 'Welcome!\n';
+    const farewell = '\nGoodbye!';
+    const prompt = 'Write to file:';
+
+    await writeToFile({
+      fileName,
+      exitCommand,
+      messages: {
+        welcome,
+        farewell,
+        prompt,
+      },
+    });
   } catch (error) {
     console.error(error);
   }
