@@ -26,18 +26,18 @@ const cp = async () => {
 
   const fileToRemove = copyFiles.filter((file) => !files.includes(file));
 
-  fileToRemove.forEach(async (file) => {
+  const removePromises = fileToRemove.map(async (file) => {
     const targetFilePath = join(targetPath, file);
-
     await rm(targetFilePath);
   });
 
-  files.forEach(async (file) => {
+  const copyPromises = files.map(async (file) => {
     const sourceFilePath = join(sourcePath, file);
     const targetFilePath = join(targetPath, file);
-
     await copyFile(sourceFilePath, targetFilePath);
   });
+
+  await Promise.allSettled([...removePromises, ...copyPromises]);
 };
 
 (async () => {
