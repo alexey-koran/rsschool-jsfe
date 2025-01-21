@@ -3,27 +3,37 @@ const { join } = require('node:path');
 
 const { mergeStyles } = require('./mergeStyles.js');
 const { copyFolderRecursive } = require('./copyAssets.js');
+const { replaceTemplateTags } = require('./replaceTemplate.js');
 
-const buildPage = async ({ build, css, assets }) => {
-  const destinationPath = join(__dirname, build.outputFolder);
+const buildPage = async ({ build, css, assets, html }) => {
+  const targetPath = join(__dirname, build.output);
 
-  await mkdir(destinationPath, { recursive: true });
+  await mkdir(targetPath, { recursive: true });
 
-  const cssSourcePath = join(__dirname, css.inputFolder);
+  const cssSourcePath = join(__dirname, css.input);
 
   await mergeStyles({
-    bundleName: css.bundleName,
+    fileName: css.output,
     sourcePath: cssSourcePath,
-    destinationPath,
+    targetPath: targetPath,
   });
 
-  const assetsSourcePath = join(__dirname, assets.inputFolder);
-  const assetsDestinationPath = join(destinationPath, assets.outputFolder);
+  const templatePath = join(__dirname, html.template);
+  const componentsPath = join(__dirname, html.input);
+  const outputPath = join(targetPath, html.output);
+
+  await replaceTemplateTags({
+    componentsPath,
+    outputPath,
+    templatePath,
+  });
+
+  const assetsSourcePath = join(__dirname, assets.input);
+  const assetsOutputPath = join(targetPath, assets.output);
 
   await copyFolderRecursive({
     sourcePath: assetsSourcePath,
-    destinationPath: assetsDestinationPath,
-    ignoredFiles: [css.bundleName],
+    targetPath: assetsOutputPath,
   });
 };
 
@@ -31,15 +41,20 @@ const buildPage = async ({ build, css, assets }) => {
   try {
     await buildPage({
       build: {
-        outputFolder: 'project-dist',
+        output: 'project-dist',
       },
       css: {
-        inputFolder: 'styles',
-        bundleName: 'style.css',
+        input: 'styles',
+        output: 'style.css',
       },
       assets: {
-        inputFolder: 'assets',
-        outputFolder: 'assets',
+        input: 'assets',
+        output: 'assets',
+      },
+      html: {
+        input: 'components',
+        output: 'index.html',
+        template: 'template.html',
       },
     });
 
