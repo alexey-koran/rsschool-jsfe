@@ -3,8 +3,8 @@ const { readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join, extname } = require('node:path');
 
-const mergeStyles = async ({ sourcePath, destinationPath, bundleName }) => {
-  const bundleFilePath = join(destinationPath, bundleName);
+const mergeStyles = async ({ sourcePath, destinationPath, fileName }) => {
+  const bundleFilePath = join(destinationPath, fileName);
 
   await rm(bundleFilePath, { force: true });
 
