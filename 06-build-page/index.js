@@ -18,10 +18,11 @@ const buildPage = async ({ build, css, assets }) => {
   });
 
   const assetsSourcePath = join(__dirname, assets.inputFolder);
+  const assetsDestinationPath = join(destinationPath, assets.outputFolder);
 
   await copyFolderRecursive({
     sourcePath: assetsSourcePath,
-    destinationPath,
+    destinationPath: assetsDestinationPath,
     ignoredFiles: [css.bundleName],
   });
 };
@@ -38,6 +39,7 @@ const buildPage = async ({ build, css, assets }) => {
       },
       assets: {
         inputFolder: 'assets',
+        outputFolder: 'assets',
       },
     });
 
