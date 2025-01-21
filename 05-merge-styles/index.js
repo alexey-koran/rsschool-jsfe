@@ -16,16 +16,16 @@ const mergeStyles = async ({ input, output }) => {
     (element) => element.isFile() && extname(element.name) === '.css',
   );
 
-  const copyPromises = styles.map((cssFile) => {
-    const sourceFilePath = join(sourcePath, cssFile.name);
+  await Promise.all(
+    styles.map((cssFile) => {
+      const sourceFilePath = join(sourcePath, cssFile.name);
 
-    const sourceStream = createReadStream(sourceFilePath);
-    const targetStream = createWriteStream(targetPath, { flags: 'a' });
+      const sourceStream = createReadStream(sourceFilePath);
+      const targetStream = createWriteStream(targetPath, { flags: 'a' });
 
-    return pipeline(sourceStream, targetStream);
-  });
-
-  await Promise.all(copyPromises);
+      return pipeline(sourceStream, targetStream);
+    }),
+  );
 };
 
 (async () => {
