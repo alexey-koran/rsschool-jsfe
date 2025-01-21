@@ -1,45 +1,60 @@
 const { readdir, stat } = require('node:fs/promises');
 const { join, extname } = require('node:path');
 
-const inputFolder = 'secret-folder';
+const getFileInfo = async (path) => {
+  const extension = extname(path);
 
-const ls = async () => {
+  const { size } = await stat(path);
+
+  return {
+    extension,
+    size: size / 1000,
+  };
+};
+
+const getFilesInfo = async (dirPath) => {
+  const dirList = await readdir(dirPath, { withFileTypes: true });
+
+  const fileStats = await Promise.all(
+    dirList
+      .filter((element) => element.isFile())
+      .map(async (element) => {
+        const path = join(dirPath, element.name);
+
+        const { extension, size } = await getFileInfo(path);
+
+        const name = element.name.replace(extension, '');
+
+        return {
+          extension: extension.slice(1),
+          name,
+          size,
+        };
+      }),
+  );
+
+  return fileStats;
+};
+
+const ls = async (inputFolder) => {
   const dirnamePath = join(__dirname, inputFolder);
 
-  const dirList = await readdir(dirnamePath, {
-    withFileTypes: true,
-  });
+  try {
+    const fileInfo = await getFilesInfo(dirnamePath);
 
-  const onlyFiles = dirList.filter((element) => element.isFile());
-
-  const tablePromises = onlyFiles.map(async (element) => {
-    const path = join(element.parentPath, element.name);
-
-    const extension = extname(path);
-
-    const extensionWithoutDot = extension ? extension.slice(1) : '';
-
-    const { size } = await stat(path);
-
-    const sizeInKb = size / 1000;
-
-    return {
-      name: element.name,
-      extension: extensionWithoutDot,
-      size: sizeInKb,
-    };
-  });
-
-  (await Promise.allSettled(tablePromises)).forEach(
-    ({ value: { name, extension, size } }) => {
+    fileInfo.forEach(({ name, extension, size }) => {
       console.debug(`${name} - ${extension} - ${size}Kb`);
-    },
-  );
+    });
+  } catch (error) {
+    throw new Error('Error processing directory:', error);
+  }
 };
 
 (async () => {
   try {
-    await ls();
+    const inputFolder = 'secret-folder';
+
+    await ls(inputFolder);
   } catch (error) {
     console.error(error);
   }
