@@ -31,7 +31,7 @@ const mergeStyles = async ({ input, output }) => {
 (async () => {
   try {
     const input = 'styles';
-    const output = 'project-dist/bundle.css';
+    const output = join('project-dist', 'bundle.css');
 
     await mergeStyles({ input, output });
 
