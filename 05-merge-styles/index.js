@@ -35,7 +35,7 @@ const mergeStyles = async ({ input, output }) => {
 
     await mergeStyles({ input, output });
 
-    console.debug('Success!');
+    console.debug('The merging of styles was successful!');
   } catch (error) {
     console.error(error);
   }
