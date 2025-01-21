@@ -19,9 +19,9 @@ const getFilesInfo = async (dirPath) => {
     dirList
       .filter((element) => element.isFile())
       .map(async (element) => {
-        const path = join(dirPath, element.name);
+        const filePath = join(dirPath, element.name);
 
-        const { extension, size } = await getFileInfo(path);
+        const { extension, size } = await getFileInfo(filePath);
 
         const name = element.name.replace(extension, '');
 
@@ -37,10 +37,10 @@ const getFilesInfo = async (dirPath) => {
 };
 
 const ls = async (input) => {
-  const dirnamePath = join(__dirname, input);
+  const sourcePath = join(__dirname, input);
 
   try {
-    const fileInfo = await getFilesInfo(dirnamePath);
+    const fileInfo = await getFilesInfo(sourcePath);
 
     fileInfo.forEach(({ name, extension, size }) => {
       console.debug(`${name} - ${extension} - ${size}Kb`);
