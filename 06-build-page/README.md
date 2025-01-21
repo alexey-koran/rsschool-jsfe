@@ -15,16 +15,16 @@ In the `index.js` file within the `06-build-page` directory, develop a script th
 
 ### Requirements
 
-- [ ] After the script execution terminates, the `project-dist` folder should be created.
-- [ ] The `project-dist` folder should contain files `index.html` and `style.css`.
-- [ ] The `project-dist` folder should contain an `assets` folder that is an exact copy of the `assets` folder in `06-build-page`.
-- [ ] The use of `fsPromises.cp()` is prohibited.
-- [ ] The `index.html` file should contain markup resulting from the replacement of template tags in the `template.html` file.
-- [ ] The `style.css` file should contain styles compiled from files in the `styles` folder.
-- [ ] When adding a component to the folder and the corresponding tag to the original `template.html` file, rerunning the script should update the `index.html` file in the `project-dist` folder. The `style.css` file and `assets` folder should also maintain an up-to-date state.
-- [ ] When writing two or more template tags consecutively in the `template.html` file, separated only by spaces without line breaks, there should be no code execution errors. For example, `{{about}} {{articles}}` should be interpreted as two <u>separate</u> components.
-- [ ] The original `template.html` file should not be modified during script execution.
-- [ ] Writing content to the template from any files except those with the `.html` extension is an error.
+- [x] After the script execution terminates, the `project-dist` folder should be created.
+- [x] The `project-dist` folder should contain files `index.html` and `style.css`.
+- [x] The `project-dist` folder should contain an `assets` folder that is an exact copy of the `assets` folder in `06-build-page`.
+- [x] The use of `fsPromises.cp()` is prohibited.
+- [x] The `index.html` file should contain markup resulting from the replacement of template tags in the `template.html` file.
+- [x] The `style.css` file should contain styles compiled from files in the `styles` folder.
+- [x] When adding a component to the folder and the corresponding tag to the original `template.html` file, rerunning the script should update the `index.html` file in the `project-dist` folder. The `style.css` file and `assets` folder should also maintain an up-to-date state.
+- [x] When writing two or more template tags consecutively in the `template.html` file, separated only by spaces without line breaks, there should be no code execution errors. For example, `{{about}} {{articles}}` should be interpreted as two <u>separate</u> components.
+- [x] The original `template.html` file should not be modified during script execution.
+- [x] Writing content to the template from any files except those with the `.html` extension is an error.
 
 ### Objectives
 
