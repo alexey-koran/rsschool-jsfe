@@ -3,49 +3,46 @@ const { mkdir, readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
-const inputFolder = 'files';
-const outputFolder = 'files-copy';
-
 const copyFile = async (sourceFilePath, targetFilePath) => {
   const sourceStream = createReadStream(sourceFilePath);
   const targetStream = createWriteStream(targetFilePath);
-
   await pipeline(sourceStream, targetStream);
-
-  return true;
 };
 
-const cp = async () => {
+const copyFiles = async ({ inputFolder, outputFolder }) => {
   const sourcePath = join(__dirname, inputFolder);
   const targetPath = join(__dirname, outputFolder);
 
   await mkdir(targetPath, { recursive: true });
 
-  const files = await readdir(sourcePath);
-  const copyFiles = await readdir(targetPath);
+  const [sourceFiles, targetFiles] = await Promise.all([
+    readdir(sourcePath),
+    readdir(targetPath),
+  ]);
 
-  const fileToRemove = copyFiles.filter((file) => !files.includes(file));
+  const fileToRemove = targetFiles.filter(
+    (file) => !sourceFiles.includes(file),
+  );
 
-  const removePromises = fileToRemove.map(async (file) => {
-    const targetFilePath = join(targetPath, file);
-    await rm(targetFilePath);
-  });
+  const operations = [
+    ...fileToRemove.map((file) => rm(join(targetPath, file))),
+    ...sourceFiles.map((file) =>
+      copyFile(join(sourcePath, file), join(targetPath, file)),
+    ),
+  ];
 
-  const copyPromises = files.map(async (file) => {
-    const sourceFilePath = join(sourcePath, file);
-    const targetFilePath = join(targetPath, file);
-    await copyFile(sourceFilePath, targetFilePath);
-  });
-
-  await Promise.allSettled([...removePromises, ...copyPromises]);
+  await Promise.allSettled(operations);
 };
 
 (async () => {
   try {
-    await cp();
+    const inputFolder = 'files';
+    const outputFolder = 'files-copy';
 
-    console.debug('Copy directory successful!');
+    await copyFiles({ inputFolder, outputFolder });
+
+    console.debug('Copying of directory files was successful!');
   } catch (error) {
-    console.error(error);
+    console.error('Error copying files:', error);
   }
 })();
