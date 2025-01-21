@@ -19,7 +19,7 @@ const copyFile = async (sourceFilePath, destinationFilePath) => {
 const copyFolderRecursive = async ({
   sourcePath,
   destinationPath,
-  ignoredFiles = [],
+  ignore = [],
 }) => {
   try {
     await mkdir(destinationPath, { recursive: true });
@@ -30,7 +30,7 @@ const copyFolderRecursive = async ({
       const sourceEntryPath = join(sourcePath, entry.name);
       const destinationEntryPath = join(destinationPath, entry.name);
 
-      if (ignoredFiles.includes(entry.name)) {
+      if (ignore.includes(destinationEntryPath)) {
         return;
       }
 
@@ -38,7 +38,7 @@ const copyFolderRecursive = async ({
         await copyFolderRecursive({
           sourcePath: sourceEntryPath,
           destinationPath: destinationEntryPath,
-          ignoredFiles,
+          ignore,
         });
       } else if (entry.isFile()) {
         await copyFile(sourceEntryPath, destinationEntryPath);
