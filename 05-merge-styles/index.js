@@ -10,9 +10,9 @@ const bundleName = 'bundle.css';
 
 const mergeStyles = async () => {
   const sourcePath = join(__dirname, inputFolder);
-  const destinationPath = join(__dirname, outputFolder);
+  const targetPath = join(__dirname, outputFolder);
 
-  const bundleFilePath = join(destinationPath, bundleName);
+  const bundleFilePath = join(targetPath, bundleName);
 
   await rm(bundleFilePath, { force: true });
 
@@ -32,11 +32,11 @@ const mergeStyles = async () => {
 
     const sourceStream = createReadStream(sourceFilePath);
 
-    const destinationStream = createWriteStream(bundleFilePath, {
+    const targetStream = createWriteStream(bundleFilePath, {
       flags: 'a',
     });
 
-    await pipeline(sourceStream, destinationStream);
+    await pipeline(sourceStream, targetStream);
   });
 };
 
