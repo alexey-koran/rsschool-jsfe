@@ -4,10 +4,10 @@ const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
 const read = async (input) => {
-  const path = join(__dirname, input);
-  const inputStream = createReadStream(path);
+  const sourcePath = join(__dirname, input);
+  const sourceStream = createReadStream(sourcePath);
 
-  await pipeline(inputStream, stdout);
+  await pipeline(sourceStream, stdout);
 };
 
 (async () => {
