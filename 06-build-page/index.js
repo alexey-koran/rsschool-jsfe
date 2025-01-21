@@ -2,7 +2,7 @@ const { mkdir } = require('node:fs/promises');
 const { join } = require('node:path');
 
 const { mergeStyles } = require('./mergeStyles.js');
-const { copyFolderRecursive } = require('./copyAssets.js');
+const { copyFolder } = require('./copyAssets.js');
 const { replaceTemplateTags } = require('./replaceTemplate.js');
 
 const buildPage = async ({ build, css, assets, html }) => {
@@ -10,30 +10,26 @@ const buildPage = async ({ build, css, assets, html }) => {
 
   await mkdir(targetPath, { recursive: true });
 
-  const cssSourcePath = join(__dirname, css.input);
-
   await mergeStyles({
-    fileName: css.output,
-    sourcePath: cssSourcePath,
-    targetPath: targetPath,
+    paths: {
+      input: join(__dirname, css.input),
+      output: join(targetPath, css.output),
+    },
   });
-
-  const templatePath = join(__dirname, html.template);
-  const componentsPath = join(__dirname, html.input);
-  const outputPath = join(targetPath, html.output);
 
   await replaceTemplateTags({
-    componentsPath,
-    outputPath,
-    templatePath,
+    paths: {
+      input: join(__dirname, html.input),
+      template: join(__dirname, html.template),
+      output: join(targetPath, html.output),
+    },
   });
 
-  const assetsSourcePath = join(__dirname, assets.input);
-  const assetsOutputPath = join(targetPath, assets.output);
-
-  await copyFolderRecursive({
-    sourcePath: assetsSourcePath,
-    targetPath: assetsOutputPath,
+  await copyFolder({
+    paths: {
+      input: join(__dirname, assets.input),
+      output: join(targetPath, assets.output),
+    },
   });
 };
 
