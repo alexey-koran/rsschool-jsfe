@@ -3,10 +3,10 @@ const { stdin, stdout, exit: exitProcess } = require('node:process');
 const { createInterface } = require('node:readline/promises');
 const { join } = require('node:path');
 
-const handleExit = (outputStream, farewellMessage) => {
+const handleExit = (targetStream, farewellMessage) => {
   console.log(farewellMessage);
 
-  outputStream.end();
+  targetStream.end();
   exitProcess(0);
 };
 
@@ -17,9 +17,9 @@ const writeToFile = async ({
 }) => {
   console.log(welcome);
 
-  const path = join(__dirname, output);
+  const targetPath = join(__dirname, output);
 
-  const outputStream = createWriteStream(path, { flags: 'a' });
+  const targetStream = createWriteStream(targetPath, { flags: 'a' });
 
   const readLine = createInterface({
     input: stdin,
@@ -31,15 +31,15 @@ const writeToFile = async ({
 
   readLine.on('line', (line) => {
     if (line.trim() === exitCommand) {
-      handleExit(outputStream, farewell);
+      handleExit(targetStream, farewell);
     } else {
-      outputStream.write(`${line}\n`);
+      targetStream.write(`${line}\n`);
 
       readLine.prompt();
     }
   });
 
-  readLine.on('SIGINT', () => handleExit(outputStream, farewell));
+  readLine.on('SIGINT', () => handleExit(targetStream, farewell));
 };
 
 (async () => {
