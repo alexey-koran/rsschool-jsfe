@@ -36,8 +36,8 @@ const getFilesInfo = async (dirPath) => {
   return fileStats;
 };
 
-const ls = async (inputFolder) => {
-  const dirnamePath = join(__dirname, inputFolder);
+const ls = async (input) => {
+  const dirnamePath = join(__dirname, input);
 
   try {
     const fileInfo = await getFilesInfo(dirnamePath);
@@ -52,9 +52,9 @@ const ls = async (inputFolder) => {
 
 (async () => {
   try {
-    const inputFolder = 'secret-folder';
+    const input = 'secret-folder';
 
-    await ls(inputFolder);
+    await ls(input);
   } catch (error) {
     console.error(error);
   }
