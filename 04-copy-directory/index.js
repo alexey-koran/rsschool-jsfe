@@ -6,43 +6,45 @@ const { join } = require('node:path');
 const inputFolder = 'files';
 const outputFolder = 'files-copy';
 
-const copyFile = async (sourceFilePath, destinationFilePath) => {
+const copyFile = async (sourceFilePath, targetFilePath) => {
   const sourceStream = createReadStream(sourceFilePath);
-  const destinationStream = createWriteStream(destinationFilePath);
+  const targetStream = createWriteStream(targetFilePath);
 
-  await pipeline(sourceStream, destinationStream);
+  await pipeline(sourceStream, targetStream);
 
   return true;
 };
 
 const cp = async () => {
   const sourcePath = join(__dirname, inputFolder);
-  const destinationPath = join(__dirname, outputFolder);
+  const targetPath = join(__dirname, outputFolder);
 
-  await mkdir(destinationPath, { recursive: true });
+  await mkdir(targetPath, { recursive: true });
 
   const files = await readdir(sourcePath);
-  const copyFiles = await readdir(destinationPath);
+  const copyFiles = await readdir(targetPath);
 
   const fileToRemove = copyFiles.filter((file) => !files.includes(file));
 
   fileToRemove.forEach(async (file) => {
-    const destinationFilePath = join(destinationPath, file);
+    const targetFilePath = join(targetPath, file);
 
-    await rm(destinationFilePath);
+    await rm(targetFilePath);
   });
 
   files.forEach(async (file) => {
     const sourceFilePath = join(sourcePath, file);
-    const destinationFilePath = join(destinationPath, file);
+    const targetFilePath = join(targetPath, file);
 
-    await copyFile(sourceFilePath, destinationFilePath);
+    await copyFile(sourceFilePath, targetFilePath);
   });
 };
 
 (async () => {
   try {
     await cp();
+
+    console.debug('Copy directory successful!');
   } catch (error) {
     console.error(error);
   }
