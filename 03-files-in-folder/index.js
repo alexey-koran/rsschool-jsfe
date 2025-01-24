@@ -15,7 +15,7 @@ const getFileInfo = async (path) => {
 const getFilesInfo = async (dirPath) => {
   const dirList = await readdir(dirPath, { withFileTypes: true });
 
-  const fileStats = await Promise.all(
+  return await Promise.all(
     dirList
       .filter((element) => element.isFile())
       .map(async (element) => {
@@ -32,17 +32,15 @@ const getFilesInfo = async (dirPath) => {
         };
       }),
   );
-
-  return fileStats;
 };
 
 const ls = async (input) => {
   const sourcePath = join(__dirname, input);
 
   try {
-    const fileInfo = await getFilesInfo(sourcePath);
+    const filesInfo = await getFilesInfo(sourcePath);
 
-    fileInfo.forEach(({ name, extension, size }) => {
+    filesInfo.forEach(({ name, extension, size }) => {
       console.debug(`${name} - ${extension} - ${size}Kb`);
     });
   } catch (error) {
