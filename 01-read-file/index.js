@@ -3,7 +3,7 @@ const { stdout } = require('node:process');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
-const read = async (input) => {
+const logFile = async (input) => {
   const sourcePath = join(__dirname, input);
   const sourceStream = createReadStream(sourcePath);
 
@@ -14,7 +14,7 @@ const read = async (input) => {
   try {
     const input = 'text.txt';
 
-    await read(input);
+    await logFile(input);
   } catch (error) {
     console.error(error);
   }
