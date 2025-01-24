@@ -21,18 +21,18 @@ const copyFiles = async ({ input, output }) => {
     readdir(targetPath),
   ]);
 
-  const fileToRemove = targetFiles.filter(
+  const filesToRemove = targetFiles.filter(
     (file) => !sourceFiles.includes(file),
   );
 
   const operations = [
-    ...fileToRemove.map((file) => rm(join(targetPath, file))),
+    ...filesToRemove.map((file) => rm(join(targetPath, file))),
     ...sourceFiles.map((file) =>
       copyFile(join(sourcePath, file), join(targetPath, file)),
     ),
   ];
 
-  await Promise.allSettled(operations);
+  await Promise.all(operations);
 };
 
 (async () => {
