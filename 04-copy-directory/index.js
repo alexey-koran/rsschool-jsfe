@@ -42,7 +42,9 @@ const copyFiles = async ({ input, output }) => {
 
     await copyFiles({ input, output });
 
-    console.debug('Copying of directory files was successful!');
+    console.debug(
+      `Directory files were successfully copied from './${input}' to './${output}'`,
+    );
   } catch (error) {
     console.error('Error copying files:', error);
   }
