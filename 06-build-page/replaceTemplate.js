@@ -30,7 +30,8 @@ const replaceTemplateTags = async ({ paths: { input, template, output } }) => {
     await writeFile(output, resultContent, 'utf-8');
   } catch (error) {
     console.error(`Error processing template tags: ${error.message}`);
-    throw error;
+
+    throw new Error(error);
   }
 };
 
