@@ -3,9 +3,8 @@ const { readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join, extname } = require('node:path');
 
-const mergeStyles = async ({ input, output }) => {
+const mergeCSSFiles = async ({ input, output }) => {
   const sourcePath = join(__dirname, input);
-
   const targetPath = join(__dirname, output);
 
   await rm(targetPath, { force: true });
@@ -16,16 +15,24 @@ const mergeStyles = async ({ input, output }) => {
     (element) => element.isFile() && extname(element.name) === '.css',
   );
 
-  await Promise.all(
-    styles.map((cssFile) => {
+  const inputFiles = await Promise.all(
+    styles.map(async (cssFile) => {
       const sourceFilePath = join(sourcePath, cssFile.name);
 
       const sourceStream = createReadStream(sourceFilePath);
       const targetStream = createWriteStream(targetPath, { flags: 'a' });
 
-      return pipeline(sourceStream, targetStream);
+      await pipeline(sourceStream, targetStream);
+
+      return {
+        name: cssFile.name,
+      };
     }),
   );
+
+  return {
+    inputFiles,
+  };
 };
 
 (async () => {
@@ -33,9 +40,17 @@ const mergeStyles = async ({ input, output }) => {
     const input = 'styles';
     const output = join('project-dist', 'bundle.css');
 
-    await mergeStyles({ input, output });
+    console.info(`Merging css files from '${input}' folder:\n`);
 
-    console.debug('The merging of styles was successful!');
+    const { inputFiles } = await mergeCSSFiles({ input, output });
+
+    const inputNames = inputFiles
+      .reduce((acc, { name }) => `${acc} '${name}'`, '')
+      .trim('');
+
+    console.info(inputNames);
+
+    console.info(`\nMerging into '${output}' was successful!`);
   } catch (error) {
     console.error(error);
   }
