@@ -4,6 +4,12 @@ This monorepo contains solutions for `RS School JS/FE` [assignments](https://git
 
 ## Tasks
 
+### Practical tasks
+
+| Task           | Path                            | Branch                                  | Fork                                                                                        |
+| -------------- | ------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `html-builder` | [html-builder](./html-builder/) | [html-builder](../../tree/html-builder) | [rolling-scopes-school/HTML-builder](https://github.com/rolling-scopes-school/HTML-builder) |
+
 ### Code tasks
 
 | Task                         | Path                                                        | Branch                                                                        | Fork                                                                                                                                |
