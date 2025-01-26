@@ -11,12 +11,12 @@ const mergeCSSFiles = async ({ input, output }) => {
 
   const sourceDirList = await readdir(sourcePath, { withFileTypes: true });
 
-  const styles = sourceDirList.filter(
+  const cssFiles = sourceDirList.filter(
     (element) => element.isFile() && extname(element.name) === '.css',
   );
 
   const inputFiles = await Promise.all(
-    styles.map(async (cssFile) => {
+    cssFiles.map(async (cssFile) => {
       const sourceFilePath = join(sourcePath, cssFile.name);
 
       const sourceStream = createReadStream(sourceFilePath);
