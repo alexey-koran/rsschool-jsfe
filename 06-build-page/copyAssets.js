@@ -1,5 +1,5 @@
 const { createReadStream, createWriteStream } = require('node:fs');
-const { mkdir, readdir, rm, stat } = require('node:fs/promises');
+const { mkdir, readdir, rm } = require('node:fs/promises');
 const { pipeline } = require('node:stream/promises');
 const { join } = require('node:path');
 
@@ -10,37 +10,37 @@ const copyFile = async (sourcePath, targetPath) => {
 const copyFolderRecursive = async ({ paths: { input, output } }) => {
   await mkdir(output, { recursive: true });
 
-  const entries = await readdir(input, { withFileTypes: true });
+  const [sourceEntries, targetEntries] = await Promise.all([
+    readdir(input, { withFileTypes: true }),
+    readdir(output, { withFileTypes: true }),
+  ]);
 
-  await Promise.all(
-    entries.map(async (entry) => {
-      const sourceEntryPath = join(input, entry.name);
-      const targetEntryPath = join(output, entry.name);
+  const copyOperations = sourceEntries.map(async (entry) => {
+    const sourceEntryPath = join(input, entry.name);
+    const targetEntryPath = join(output, entry.name);
 
-      if (entry.isDirectory()) {
-        return copyFolderRecursive({
-          paths: { input: sourceEntryPath, output: targetEntryPath },
-        });
-      } else if (entry.isFile()) {
-        return copyFile(sourceEntryPath, targetEntryPath);
-      }
-    }),
+    if (entry.isDirectory()) {
+      return copyFolderRecursive({
+        paths: {
+          input: sourceEntryPath,
+          output: targetEntryPath,
+        },
+      });
+    } else if (entry.isFile()) {
+      return copyFile(sourceEntryPath, targetEntryPath);
+    }
+  });
+
+  const filesToRemove = targetEntries.filter(
+    (targetFile) =>
+      !sourceEntries.some((sourceFile) => sourceFile.name === targetFile.name),
   );
 
-  const targetEntries = await readdir(output, { withFileTypes: true });
-
-  await Promise.all(
-    targetEntries.map(async (destEntry) => {
-      const destEntryPath = join(output, destEntry.name);
-      const sourceEntryPath = join(input, destEntry.name);
-
-      try {
-        await stat(sourceEntryPath);
-      } catch {
-        await rm(destEntryPath, { recursive: true, force: true });
-      }
-    }),
+  const removeOperations = filesToRemove.map((dirent) =>
+    rm(join(output, dirent.name), { recursive: true, force: true }),
   );
+
+  await Promise.all([...copyOperations, ...removeOperations]);
 };
 
 const copyFolder = async ({ paths: { input, output } }) => {
