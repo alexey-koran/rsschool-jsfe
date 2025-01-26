@@ -1,7 +1,7 @@
 const { mkdir } = require('node:fs/promises');
 const { join } = require('node:path');
 
-const { mergeStyles } = require('./mergeStyles.js');
+const { mergeCSSFiles } = require('./mergeCSSFiles.js');
 const { copyFolder } = require('./copyAssets.js');
 const { replaceTemplateTags } = require('./replaceTemplate.js');
 
@@ -10,7 +10,7 @@ const buildPage = async ({ build, css, assets, html }) => {
 
   await mkdir(targetPath, { recursive: true });
 
-  await mergeStyles({
+  await mergeCSSFiles({
     paths: {
       input: join(__dirname, css.input),
       output: join(targetPath, css.output),
@@ -54,7 +54,7 @@ const buildPage = async ({ build, css, assets, html }) => {
       },
     });
 
-    console.debug('Bundle page successful!');
+    console.info('Bundle page successful!');
   } catch (error) {
     console.error(error);
   }
