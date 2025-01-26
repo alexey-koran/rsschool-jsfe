@@ -41,7 +41,7 @@ const ls = async (input) => {
     const filesInfo = await getFilesInfo(sourcePath);
 
     filesInfo.forEach(({ name, extension, size }) => {
-      console.debug(`${name} - ${extension} - ${size}Kb`);
+      console.info(`${name} - ${extension} - ${size}Kb`);
     });
   } catch (error) {
     throw new Error('Error processing directory:', error);
