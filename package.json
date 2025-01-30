@@ -2,6 +2,10 @@
   "name": "rsschool-jsfe",
   "version": "0.0.1",
   "description": "This monorepo contains solutions for RS School JS/FE assignments.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexey-koran/rsschool-jsfe.git"
+  },
   "keywords": [
     "rsschool",
     "javascript",
@@ -12,6 +16,10 @@
   ],
   "author": "Alexey-Koran <alexey.koran@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexey-koran/rsschool-jsfe/issues"
+  },
+  "homepage": "https://github.com/alexey-koran/rsschool-jsfe#readme",
   "devDependencies": {
     "@alexey-koran/prettier-config": "^0.1.1",
     "prettier": "^3.3.3"
