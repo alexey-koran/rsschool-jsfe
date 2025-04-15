@@ -1,63 +1,72 @@
-function eval() {
-    // Do not use eval!!!
-    return;
-}
+const calculate = ({ a, b, sign }) => {
+  const x = Number(a);
+  const y = Number(b);
 
-const calculate = (a, b, sign) => {
-    switch (sign) {
-        case '*':
-            return +a * +b;
-        case '/':
-            if (b == 0) throw new TypeError('TypeError: Division by zero.');
-            return +a / +b;
-        case '+':
-            return +a + +b;
-        case '-':
-            return +a - +b;
-    }
-}
+  const signMap = {
+    '*': () => x * y,
+    '+': () => x + y,
+    '-': () => x - y,
+    '/':
+      y === 0
+        ? () => {
+            throw new TypeError('TypeError: Division by zero.');
+          }
+        : () => x / y,
+  };
+
+  return signMap[sign]();
+};
 
 const calculator = (expr) => {
-    let exprArray = expr.split(' ');
+  if (expr.startsWith('(') && expr.endsWith(')')) {
+    expr = expr.slice(1, -1);
+  }
 
-    for (let i = 0; i < exprArray.length - 1; i++) {
-        if (exprArray[i] == '*' || exprArray[i] == '/'){
-            exprArray[i] = calculate(+exprArray[i - 1], exprArray[i + 1], exprArray[i]);
-            exprArray.splice(i - 1, 1);
-            exprArray.splice(i, 1);
-            i -= 1;
-        }
+  const tokens = expr.split(' ');
+
+  while (tokens.length > 1) {
+    let signIndex = tokens.findIndex((item) => item === '*' || item === '/');
+
+    if (signIndex === -1) {
+      signIndex = tokens.findIndex((item) => item === '+' || item === '-');
     }
 
-    for (let i = 0; i < exprArray.length - 1; i++) {
-        if (exprArray[i] == '+' || exprArray[i] == '-'){
-            exprArray[i] = calculate(+exprArray[i - 1], exprArray[i + 1], exprArray[i]);
-            exprArray.splice(i - 1, 1);
-            exprArray.splice(i, 1);
-            i -= 1;
-        }
+    if (signIndex === -1) {
+      return String(tokens[0]);
     }
 
-    return +(exprArray[0]);
+    const a = tokens[signIndex - 1];
+    const b = tokens[signIndex + 1];
+    const sign = tokens[signIndex];
+
+    tokens.splice(signIndex - 1, 3, calculate({ a, b, sign }));
+  }
+
+  return String(tokens[0]);
 }
 
+const findDeepestGroup = (expr) => expr.match(/\([\d.*/+-\s]+\)/)?.[0];
+
 const expressionCalculator = (expr) => {
-    expr = expr.replace(/\s/g, '').replace(/(\*|\/|\+|\-)/g, ' $& ');
+  let expression = expr.replace(/\s/g, '').replace(/[*/+-]/g, ' $& ');
 
-    let opened_bracket = expr.match(/\(/g) != null ? expr.match(/\(/g).length : 0;
-    let closed_bracket = expr.match(/\)/g) != null ? expr.match(/\)/g).length : 0;
+  const openBracketCount = expression.match(/\(/g)?.length;
+  const closeBracketCount = expression.match(/\)/g)?.length;
 
-    if (opened_bracket !== closed_bracket) {
-        throw new Error('ExpressionError: Brackets must be paired');
-    }
+  if (openBracketCount !== closeBracketCount) {
+    throw new Error('ExpressionError: Brackets must be paired');
+  }
 
-    for (let i = 0; i < opened_bracket; i++){
-        expr = expr.replace(expr.match(/\([\d\+\/\*\-. ]+\)/)[0], calculator(expr.match(/\([\d\+\/\*\-. ]+\)/)[0].replace('(','').replace(')','')));
-    }
+  let deepestGroup = findDeepestGroup(expression);
 
-    return calculator(expr);
+  while (deepestGroup !== undefined) {
+    expression = expression.replace(deepestGroup, calculator(deepestGroup));
+    deepestGroup = findDeepestGroup(expression);
+  }
+
+  return Number(calculator(expression));
 }
 
 module.exports = {
-    expressionCalculator
+  expressionCalculator,
 }
