@@ -1,1 +1,1 @@
-[holy-grail-layout](https://alexey-koren.github.io/holy-grail-layout/)
+[holy-grail-layout](https://alexey-koran.github.io/holy-grail-layout/)
