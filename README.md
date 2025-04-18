@@ -6,13 +6,14 @@ This monorepo contains solutions for `RS School JS/FE` [assignments](https://git
 
 ### Practical tasks
 
-| Task           | Path                            | Branch                                  | Fork                                                                                        |
-| -------------- | ------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `html-builder` | [html-builder](./html-builder/) | [html-builder](../../tree/html-builder) | [rolling-scopes-school/HTML-builder](https://github.com/rolling-scopes-school/HTML-builder) |
+| Task                | Path                                      | Branch                                            | Fork / Task link                                                                            |
+| ------------------- | ----------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `holy-grail-layout` | [holy-grail-layout](./holy-grail-layout/) | [holy-grail-layout](../../tree/holy-grail-layout) | -                                                                                           |
+| `html-builder`      | [html-builder](./html-builder/)           | [html-builder](../../tree/html-builder)           | [rolling-scopes-school/HTML-builder](https://github.com/rolling-scopes-school/HTML-builder) |
 
 ### Code tasks
 
-| Task                         | Path                                                        | Branch                                                                        | Fork                                                                                                                                |
+| Task                         | Path                                                        | Branch                                                                        | Fork / Task link                                                                                                                    |
 | ---------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `Common`                     |                                                             |                                                                               |                                                                                                                                     |
 | `basic-js-ds`                | [basic-js-ds](./basic-js-ds/)                               | [basic-js-ds-fork](../../tree/basic-js-ds-fork)                               | [AlreadyBored/basic-js-ds](https://github.com/AlreadyBored/basic-js-ds)                                                             |
