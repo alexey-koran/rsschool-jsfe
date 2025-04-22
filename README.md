@@ -27,3 +27,7 @@ This monorepo contains solutions for `RS School JS/FE` [assignments](https://git
 | `core-js-conditions-n-loops` | [core-js-conditions-n-loops](./core-js-conditions-n-loops/) | [core-js-conditions-n-loops-fork](../../tree/core-js-conditions-n-loops-fork) | [rolling-scopes-school/core-js-conditions-n-loops-tasks](https://github.com/rolling-scopes-school/core-js-conditions-n-loops-tasks) |
 | `core-js-numbers`            | [core-js-numbers](./core-js-numbers/)                       | [core-js-numbers-fork](../../tree/core-js-numbers-fork)                       | [rolling-scopes-school/core-js-numbers](https://github.com/rolling-scopes-school/core-js-numbers)                                   |
 | `core-js-strings`            | [core-js-strings](./core-js-strings/)                       | [core-js-strings-fork](../../tree/core-js-strings-fork)                       | [rolling-scopes-school/core-js-strings](https://github.com/rolling-scopes-school/core-js-strings)                                   |
+
+## License
+
+[MIT](./LICENSE)
