@@ -1,7 +1,6 @@
-const assert = require('assert');
+import assert from 'assert';
 
-const toReadable = require('./src');
-
+import { toReadable } from './src/index.js';
 
 it('Should return \'zero\' when 0 given', () => {
   const readable = toReadable(0);
