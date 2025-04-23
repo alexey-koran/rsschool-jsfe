@@ -2,7 +2,7 @@
   "name": "rsapp-task-template",
   "version": "1.0.0",
   "description": "Template for rsapp task",
-  "main": "index.js",
+  "main": "index.mjs",
   "type": "module",
   "scripts": {
     "test": "mocha test",
