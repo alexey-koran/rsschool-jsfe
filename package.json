@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Template for rsapp task",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "mocha test",
-    "postinstall": "node postinstall.js"
+    "postinstall": "node postinstall.mjs"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=22"
   },
   "repository": {
     "type": "git",
