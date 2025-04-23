@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-import { toReadable } from './src/index.js';
+import { toReadable } from './src/index.mjs';
 
 it('Should return \'zero\' when 0 given', () => {
   const readable = toReadable(0);
