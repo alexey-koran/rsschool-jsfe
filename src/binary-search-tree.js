@@ -149,5 +149,5 @@ class BinarySearchTree {
 }
 
 module.exports = {
-  BinarySearchTree
+  BinarySearchTree,
 };

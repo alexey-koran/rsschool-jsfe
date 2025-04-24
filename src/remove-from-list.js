@@ -39,5 +39,5 @@ const removeKFromList = (l, k) => {
 
 
 module.exports = {
-  removeKFromList
+  removeKFromList,
 };
