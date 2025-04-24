@@ -1,8 +1,8 @@
 const assert = require('assert');
 
-const towelSort = require('./src/index.js');
+const { towelSort } = require('./src/index.mjs');
 
-describe('.towelSort, should perfrom \'towelSort\'', () => {
+describe('.towelSort, should perform \'towelSort\'', () => {
 
   it('Should return empty array if no params passed', () => {
     assert.deepEqual(towelSort(), []);
