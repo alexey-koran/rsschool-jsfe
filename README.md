@@ -18,8 +18,7 @@ Following matrix should be 'sorted' to:
  [1, 2, 3, 6, 5, 4, 7, 8, 9 ]
 ```
 
-
-Write your code in `src/index.js.
+Write your code in `src/index.mjs.
 *All test cases are designed as “error-free”, so don't worry about handling any errors.*
 
 ## Prepare and test
@@ -36,6 +35,7 @@ Write your code in `src/index.js.
 2. Go to [submit task page](https://app.rs.school/course/student/auto-test?course=rs-2020-q1)
 3. Select your task (towel-sort)
 4. Press the submit button and enjoy
+
 ### Notes
-1. We recommend you to use nodejs of version 12 or lower. If you using are any of the features which are not supported by v12, the score won't be submitted.
+1. We recommend you to use nodejs of version 22 or higher. If you using are any of the features which are not supported by v22, the score won't be submitted.
 2. Each of your test case is limited to 30 sec.
