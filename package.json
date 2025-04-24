@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha test",
-    "postinstall": "node postinstall.js"
+    "postinstall": "node postinstall.mjs"
   },
   "engines": {
     "node": ">=22"
