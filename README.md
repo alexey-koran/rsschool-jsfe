@@ -30,9 +30,9 @@ Write your code in `src/index.mjs.
 6. Run `npm test` in the command line
 7. You will see the number of passing and failing tests you 100% of passing tests is equal to 100p in score
 
-## Submit to [rs app](https://app.rs.school)
-1. Open [rs app](https://app.rs.school) and login
-2. Go to [submit task page](https://app.rs.school/course/student/auto-test?course=rs-2020-q1)
+## Submit to [RS APP](https://app.rs.school)
+1. Open [RS APP](https://app.rs.school) and login
+2. Open [RS APP](https://app.rs.school) and click `Auto Test`
 3. Select your task (towel-sort)
 4. Press the submit button and enjoy
 
