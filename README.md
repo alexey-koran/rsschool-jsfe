@@ -6,10 +6,10 @@ This monorepo contains solutions for `RS School JS/FE` [assignments](https://git
 
 ### Practical tasks
 
-| Task                | Path                                      | Branch                                            | Fork / Task link                                                                            |
-| ------------------- | ----------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `holy-grail-layout` | [holy-grail-layout](./holy-grail-layout/) | [holy-grail-layout](../../tree/holy-grail-layout) | -                                                                                           |
-| `html-builder`      | [html-builder](./html-builder/)           | [html-builder](../../tree/html-builder)           | [rolling-scopes-school/HTML-builder](https://github.com/rolling-scopes-school/HTML-builder) |
+| Task                | Path                                      | Branch                                            | Fork / Task link                                                                            | Deployment                                                              |
+| ------------------- | ----------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `holy-grail-layout` | [holy-grail-layout](./holy-grail-layout/) | [holy-grail-layout](../../tree/holy-grail-layout) | -                                                                                           | [link](https://alexey-koran.github.io/rsschool-jsfe/holy-grail-layout/) |
+| `html-builder`      | [html-builder](./html-builder/)           | [html-builder](../../tree/html-builder)           | [rolling-scopes-school/HTML-builder](https://github.com/rolling-scopes-school/HTML-builder) | -                                                                       |
 
 ### Code tasks
 
