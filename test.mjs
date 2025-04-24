@@ -40,14 +40,14 @@ describe('.towelSort, should perform \'towelSort\'', () => {
     assert.deepEqual(towelSort(matrix), [ 1, 2, 3, 4, 8, 7, 6, 5, 9, 10, 11, 12, 16, 15, 14, 13 ]);
   });
 
-  it('should do towelSort correctrly with nonsquare matrix', () => {
+  it('should do towelSort correctly with non square matrix', () => {
     const matrix = [
         [1, 2, 3, 4],
         [5, 6, 7, 8],
         [9, 10, 11, 12],
     ];
 
-    assert.deepEqual(towelSort(matrix), [ 1, 2, 3, 4, 8, 7, 6, 5, 9, 10, 11, 12,]);
+    assert.deepEqual(towelSort(matrix), [ 1, 2, 3, 4, 8, 7, 6, 5, 9, 10, 11, 12 ]);
   });
 
   it('should do towelSort', () => {
