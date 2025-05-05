@@ -266,27 +266,26 @@ function getCube(num) {
  *   3  => 2
  *   10 => 55
  */
+
+const fibonacciCache = [0, 1];
+
 function getFibonacciNumber(index) {
-  if (index <= 1) {
-    return index;
+  if (fibonacciCache[index] !== undefined) {
+    return fibonacciCache[index];
   }
 
-  const fibonacciMap = new Map();
+  const lastIndex = fibonacciCache.length - 1;
+  let a = fibonacciCache[lastIndex - 1];
+  let b = fibonacciCache[lastIndex];
 
-  const calculateNumber = () => {
-    if (fibonacciMap.has(index)) {
-      return fibonacciMap.get(index);
-    }
+  for (let i = lastIndex + 1; i <= index; i += 1) {
+    const next = a + b;
+    fibonacciCache[i] = next;
+    a = b;
+    b = next;
+  }
 
-    const result =
-      getFibonacciNumber(index - 1) + getFibonacciNumber(index - 2);
-
-    fibonacciMap.set(index, result);
-
-    return result;
-  };
-
-  return calculateNumber();
+  return fibonacciCache[index];
 }
 
 /**
